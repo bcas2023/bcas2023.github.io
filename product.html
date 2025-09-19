@@ -315,10 +315,24 @@
                         </div>
                     </div>
                 </div>
+                <!-- Card: Glue Collection -->
+                <div class="col-md-6 col-lg-4 d-flex justify-content-center product-card-wrapper">
+                    <div class="card h-100" style="width: 18rem;">
+                        <img src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Deli_PVP_Glue_Stick36_gm-Deli-f612f-260689.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Glue Collection">
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title">Glue Collection</h5>
+                            <a href="glue.html" class="btn btn-primary mt-auto">See All Glues</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- All product category cards have been removed. -->
             </div>
             <div id="no-results-message" class="text-center mt-5" style="display: none;">
                 <h4 class="text-muted">No products found</h4>
                 <p class="text-muted">Try a different search term.</p>
+            <div id="no-results-message" class="text-center mt-5" style="display: block;">
+                <h4 class="text-muted">No Product Categories Available</h4>
+                <p class="text-muted">Please check back later.</p>
             </div>
         </div>
     </div>
@@ -397,6 +411,11 @@
         const noResultsMessage = document.getElementById('no-results-message');
 
         const allProductTitles = productCards.map(card => card.querySelector('.card-title').innerText);
+
+        // If there are no product cards, hide the search bar as it's not needed.
+        if (productCards.length === 0) {
+            document.querySelector('.row.justify-content-center.mb-5').style.display = 'none';
+        }
 
         const debounce = (func, delay) => {
             let timeout;
