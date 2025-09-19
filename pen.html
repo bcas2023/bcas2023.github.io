@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
-
+</html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -909,7 +909,7 @@
             const cardsArray = Array.from(productCards);
 
             if (sortValue === 'default') {
-                originalCardsOrder.forEach(card => penCards.appendChild(card));
+                originalCardsOrder.forEach(card => productCardsContainer.appendChild(card));
                 return;
             }
 
@@ -924,7 +924,7 @@
                 }
             });
 
-            cardsArray.forEach(card => penCards.appendChild(card));
+            cardsArray.forEach(card => productCardsContainer.appendChild(card));
         });
         // Hide loader when the page is fully loaded
         window.addEventListener('load', () => {
