@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Pen </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: var(--bs-body-bg);
+        }
+
+        .navbar-brand {
+            color: #008cff !important; /* Sky Blue */
+            font-weight: bold;
+        }
+
+        .card {
+            background-color: rgba(var(--bs-card-bg-rgb), 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-color: rgba(var(--bs-body-color-rgb), 0.15);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: contain;
+        }
+
+        .in-stock {
+            color: #33ff00;
+            /* Bootstrap's success green */
+            font-weight: 500;
+        }
+
+        .navbar.sticky-top {
+            background-color: rgba(var(--bs-tertiary-bg-rgb), 0.75) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link {
+            transition: color 0.3s ease;
+            position: relative;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-bottom: 8px; /* space for underline */
+        }
+
+        .nav-link:hover {
+            color: var(--bs-primary-text-emphasis);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bs-primary);
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after {
+            width: calc(100% - 1rem); /* Match padding */
+        }
+
+        .theme-switch-wrapper {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1001;
+        }
+
+        #theme-switcher {
+            /* Reset button styles */
+            background: none;
+            border: 1px solid var(--bs-border-color-translucent);
+            padding: 0;
+            cursor: pointer;
+
+            /* Track styles */
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: var(--bs-tertiary-bg);
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        #theme-switcher:focus-visible {
+            outline: 2px solid var(--bs-primary);
+            outline-offset: 2px;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--bs-gray-600);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-thumb svg {
+            width: 16px;
+            height: 16px;
+            color: var(--bs-body-bg);
+        }
+
+        .slider-thumb .sun {
+            display: none;
+        }
+
+        .slider-thumb .moon {
+            display: block;
+        }
+
+        [data-bs-theme="dark"] .slider-thumb .sun {
+            display: block;
+        }
+
+        [data-bs-theme="dark"] .slider-thumb .moon {
+            display: none;
+        }
+
+        #suggestions {
+            position: absolute;
+            left: 15px;
+            /* Align with col-md-8 padding */
+            right: 15px;
+            /* Align with col-md-8 padding */
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: rgba(var(--bs-body-bg-rgb), 0.85);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 1000;
+            border-radius: var(--bs-border-radius);
+            border: var(--bs-border-width) solid var(--bs-border-color);
+        }
+
+        .suggestion-item {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+
+        [data-bs-theme="dark"] #theme-switcher .slider-thumb {
+            transform: translateX(30px);
+            background-color: var(--bs-primary);
+        }
+
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bs-body-bg);
+            z-index: 1050;
+            /* Higher than search suggestions */
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-svg {
+            --uib-size: 82px;
+            --uib-speed: 0.8s;
+            --uib-bg-opacity: .1;
+            height: var(--uib-size);
+            width: var(--uib-size);
+            transform-origin: center;
+            overflow: visible;
+        }
+
+        .car {
+            fill: none;
+            stroke-dasharray: 15, 85;
+            stroke-dashoffset: 0;
+            stroke-linecap: round;
+            animation: travel var(--uib-speed) linear infinite, gradient-cycle 4s linear infinite;
+            will-change: stroke-dasharray, stroke-dashoffset;
+            transition: stroke 0.5s ease;
+        }
+
+        .track {
+            opacity: var(--uib-bg-opacity);
+            transition: stroke 0.5s ease;
+            animation: gradient-cycle 4s linear infinite;
+        }
+
+        @keyframes gradient-cycle {
+            0% {
+                stroke: #ff1900;
+                /* red */
+            }
+
+            20% {
+                stroke: #2bff00;
+                /* green */
+            }
+
+            40% {
+                stroke: #4400ff;
+                /* blue */
+            }
+
+            60% {
+                stroke: #b700ff;
+                /* violet */
+            }
+
+            80% {
+                stroke: #ff6600;
+                /* orange */
+            }
+
+            100% {
+                stroke: #ff1900;
+                /* red */
+            }
+        }
+
+        @keyframes travel {
+            0% {
+                stroke-dashoffset: 0;
+            }
+
+            100% {
+                stroke-dashoffset: -100;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loader-wrapper" class="loader-wrapper">
+        <svg class="loader-svg" x="0px" y="0px" viewBox="0 0 40 40" height="40" width="40"
+            preserveAspectRatio="xMidYMid meet">
+            <path class="track" fill="none" stroke-width="4" pathLength="100"
+                d="M29.760000000000005 18.72 c0 7.28 -3.9200000000000004 13.600000000000001 -9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.840000000000002 2.64 c -3.6 0 -6.88 -0.96 -9.76 -2.64 c0 -7.28 3.9200000000000004 -13.52 9.840000000000002 -16.96 c2.8800000000000003 -1.6800000000000002 6.24 -2.64 9.76 -2.64 S26.880000000000003 17.040000000000003 29.760000000000005 18.72 c5.84 3.3600000000000003 9.76 9.68 9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.76 2.64 c -3.6 0 -6.88 -0.96 -9.840000000000002 -2.64 c -5.84 -3.3600000000000003 -9.76 -9.68 -9.76 -16.96 c0 -7.28 3.9200000000000004 -13.600000000000001 9.76 -16.96 C25.84 5.120000000000001 29.760000000000005 11.440000000000001 29.760000000000005 18.72z">
+            </path>
+            <path class="car" fill="none" stroke-width="4" pathLength="100"
+                d="M29.760000000000005 18.72 c0 7.28 -3.9200000000000004 13.600000000000001 -9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.840000000000002 2.64 c -3.6 0 -6.88 -0.96 -9.76 -2.64 c0 -7.28 3.9200000000000004 -13.52 9.840000000000002 -16.96 c2.8800000000000003 -1.6800000000000002 6.24 -2.64 9.76 -2.64 S26.880000000000003 17.040000000000003 29.760000000000005 18.72 c5.84 3.3600000000000003 9.76 9.68 9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.76 2.64 c -3.6 0 -6.88 -0.96 -9.840000000000002 -2.64 c -5.84 -3.3600000000000003 -9.76 -9.68 -9.76 -16.96 c0 -7.28 3.9200000000000004 -13.600000000000001 9.76 -16.96 C25.84 5.120000000000001 29.760000000000005 11.440000000000001 29.760000000000005 18.72z">
+            </path>
+        </svg>
+    </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">Baroda Computers and Seals</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
+                aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main-nav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="product.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html#contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html#about-us">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">All The Pens of Our Store</h1>
+        <div class="row align-items-center mb-4">
+            <div class="col-auto">
+                <select class="form-select" id="sortSelect" aria-label="Sort by price">
+                    <option selected value="default">Sort by...</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                </select>
+            </div>
+            <div class="col-md-8 col-lg-6 position-relative">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="productSearchInput" placeholder="find your pens..."
+                        aria-label="Search for pens" autocomplete="off">
+                    <button class="btn btn-primary" type="button" id="productSearchButton">Search</button>
+                </div>
+                <div id="suggestions" class="list-group position-absolute w-100 mt-1" style="z-index: 1000;"></div>
+        </div>
+        </div>
+        <div class="row g-4" id="productCards">
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://fs.pbs.com.bd/DIR/Com/PBS/Product/ImageDetails/2102121.jpg" class="card-img-top"
+                        alt="Fresh Allrounder">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Allrounder</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Fresh_Pen_Good_Day_Ball_Pen_06_Pcs-Fresh_Stationery-4507b-193664.jpg"
+                        class="card-img-top" alt="Fresh Goodday" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Goodday</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://greenmartbd.net/storage/upload/product/LBVd21bQw8zVBNdJpheVPXBZqBX4EMpT3hgC4cyR.jpg"
+                        class="card-img-top" alt="Fresh Icon" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Icon</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://chaldal.com/asset/cod-automations/media/images/138138/original/Fresh-Spark-Ball-Pen-each-1695015337589.jpg" class="card-img-top"
+                        alt="Fresh Spark" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Spark</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://pbs.com.bd/_next/image?url=https%3A%2F%2Ffs.pbs.com.bd%2FDIR%2FCom%2FPBS%2FProduct%2FImage%2F2102122.JPG&w=384&q=60"
+                        class="card-img-top" alt="Fresh Sprint" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Sprint</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://fs.pbs.com.bd/DIR/Com/PBS/Product/ImageDetails/1836759.jpg" class="card-img-top"
+                        alt="Goodluck Anytime">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Anytime</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 6.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://www.rflbd.com/Application/storage/app/public/relativeContentPath/products/01e2ef3d2faa662483567a4a769449a918.jpg"
+                        class="card-img-top" alt="Goodluck Craze Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Craze</h5>
+                        <p class="card-text"><strong>Price:</strong> Tk 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0489599_good-luck-craze-blako-pen-1-piece.jpeg"
+                        class="card-img-top" alt="Goodluck Craze Blako Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Craze Blako</h5>
+                        <p class="card-text"><strong>Price:</strong> tk 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://pbs.com.bd/_next/image?url=https%3A%2F%2Ffs.pbs.com.bd%2FDIR%2FCom%2FPBS%2FProduct%2FImageDetails%2F2402335.JPG&w=384&q=60"
+                        class="card-img-top" alt="Goodluck Express Ballpen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Express Ballpen</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Good_Luck_Fast_Gel_Pen_Black_5_Pcs_Pouch-Good_Luck-85475-261450.jpg"
+                        class="card-img-top" alt="Goodluck Fastgel Black">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Fastgel Black</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0503598_fast-gel-pen-blue.webp"
+                        class="card-img-top" alt="Goodluck Fastgel Blue Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Fastgel Blue</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0503604_fast-gel-pen-green.webp" class="card-img-top"
+                        alt="Goodluck Fastgel Green">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Fastgel Green</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0503615_fast-gel-pen-red.webp" class="card-img-top"
+                        alt="Goodluck Fastgel Red">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Fastgel Red</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0585251_good-luck-refill-pen-idea-pen-10-pcs_400.jpeg"
+                        class="card-img-top" alt="Goodluck Idea">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Idea</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://rflbd.com/Application/storage/app/public/relativeContentPath/products/a84a0c031bb1cfc2cb1eaa449700102e27.jpg"
+                        class="card-img-top" alt="Goodluck Planet">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Planet</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 32.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://fs.pbs.com.bd/DIR/Com/PBS/Product/ImageDetails/1836469.jpg" class="card-img-top"
+                        alt="Goodluck Rose">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Rose</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/200x200.png?text=Image+Not+Available" class="card-img-top"
+                        alt="Goodluck School Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck School</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0489396_df-pen-super-point-1-piece.jpeg"
+                        class="card-img-top" alt="Goodluck Super Point">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Super Point</h5>
+                        <p class="card-text"><strong>Price:</strong> Tk 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://rflbd.com/Application/storage/app/public/relativeContentPath/fb_temp_image/fbtemp3261.png"
+                        class="card-img-top" alt="Goodluck Topper Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Topper</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0489433_good-luck-df-pen-topper-colors-1-piece.jpeg"
+                        class="card-img-top" alt="Goodluck Topper Color Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Topper Color</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 6.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://fs.pbs.com.bd/DIR/Com/PBS/Product/ImageDetails/1836055.jpg" class="card-img-top"
+                        alt="Goodluck Ultima Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Ultima </h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://kiosk.com.bd/web/image/product.template/1092/image_1024?unique=ab7fcef" class="card-img-top"
+                        alt="Matador Alltime" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Alltime</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://fnfshoppingbd.com/storage/app/public/product/2023-02-09-63e501f435f80.png" class="card-img-top"
+                        alt="Matador Hi School" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Hi School</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://static-01.daraz.com.bd/p/ee6b3c23b5f92977dfcd09dd7bb0aa68.png" class="card-img-top"
+                        alt="Matador i-teen Black Premium" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador i-teen Black Premium</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://img.drz.lazcdn.com/static/bd/p/6cc439a7be3819793d7a5a121469196e.jpg_720x720q80.jpg_.webp" class="card-img-top"
+                        alt="Matador Smoothy" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Smoothy</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://esmart.com.bd/wp-content/uploads/2022/03/Capture-13.jpg" class="card-img-top"
+                        alt="Matador Woodmark" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Woodmark</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 9.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://janatarbazar.com/public/uploads/all/iqoLbJwSWuRqvkyQvymN4KLvB6iyoTTe3eYe6xQU.jpg" class="card-img-top"
+                        alt="Matador Fiction Gel Pen" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Fiction Gel Pen</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 34.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://static-01.daraz.com.bd/p/2daf064998d2c4fe91c767aff85fb2e7.jpg" class="card-img-top"
+                        alt="Matador i-teen Gel Black" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador i-teen Gel Black</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://static-01.daraz.com.bd/p/d1ba259d90018e760fe569a2fdd7333f.jpg" class="card-img-top"
+                        alt="Matador i-teen Gel Blue" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador i-teen Gel Blue</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://static-01.daraz.com.bd/p/541ff63733456dfcb5fff1b7b50ab31d.jpg" class="card-img-top"
+                        alt="Matador i-teen Gel Green" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador i-teen Gel Green</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://static-01.daraz.com.bd/p/85e4501a4ff386c04d6c2fb99a830a3e.jpg" class="card-img-top"
+                        alt="Matador i-teen Gel Red" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador i-teen Gel Red</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 10.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://kiosk.com.bd/web/image/product.template/110/image_1024?unique=6416023" class="card-img-top"
+                        alt="Matador Orbit Gel Pen" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Orbit Gel Pen</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 5.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://matador.com.bd/stationery/admin/uploads/product/matador-claro/1666085027A5SNk.jpg" class="card-img-top"
+                        alt="Matador Claro Black" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Claro Black</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 7.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://www.al-layl.com/wp-content/uploads/2021/09/Matador-Glitter-Gel-Pen-1.jpg" class="card-img-top"
+                        alt="Matador Glitter Pen" loading="lazy">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Glitter Pen</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 19.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/200x200.png?text=Image+Not+Available" class="card-img-top"
+                        alt="Magic Pen">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Magic Pen</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 30.00</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="no-results-message" class="text-center mt-5" style="display: none;">
+            <h4 class="text-muted">No products found</h4>
+            <p class="text-muted">Try a different search term.</p>
+        </div>
+    </div>
+    </div>
+    <!-- Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productModalLabel">Product Inquiry</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+                <img src="" id="modalProductImage" class="img-fluid mb-3" alt="Product Image" style="max-height: 200px; object-fit: contain;">
+                <h4 id="modalProductTitle"></h4>
+                <p id="modalProductPrice" class="fs-5"></p>
+                <p id="modalProductStock"></p>
+            </div>
+            <hr>
+            <p class="text-center small">To inquire about this product, please fill out the form below or call us at <a href="tel:+8801714637798">+8801714637798</a>.</p>
+            <form id="buyNowForm" class="mt-3">
+                <input type="hidden" id="formProductName" name="productName">
+                <div class="mb-3">
+                    <label for="formCustomerName" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="formCustomerName" placeholder="John Doe" required>
+                </div>
+                <div class="mb-3">
+                    <label for="formCustomerPhone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="formCustomerPhone" placeholder="+880 123 456 7890" required>
+                </div>
+                <div class="mb-3">
+                    <label for="formCustomerLocation" class="form-label">Your Location</label>
+                    <input type="text" class="form-control" id="formCustomerLocation" placeholder="e.g., Singra, Natore" required>
+                </div>
+                <p class="form-text text-danger small mb-3">Note: If you are out of Singra, Natore, you have to pay the courier service bill.</p>
+                <button type="submit" class="btn btn-primary w-100">Send Inquiry</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="theme-switch-wrapper">
+        <button id="theme-switcher" aria-label="Toggle theme">
+            <span class="slider-thumb">
+                <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </span>
+        </button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const themeSwitcher = document.getElementById('theme-switcher');
+        const htmlEl = document.documentElement;
+
+        function applyTheme(theme) {
+            htmlEl.setAttribute('data-bs-theme', theme);
+        }
+
+        // Apply saved theme on load, or OS preference, otherwise keep default from HTML
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else if (prefersDark) {
+            applyTheme('dark');
+        }
+
+        themeSwitcher.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // --- Search & Sort Logic ---
+        const searchInput = document.getElementById('productSearchInput');
+        const searchButton = document.getElementById('productSearchButton');
+        const suggestionsDiv = document.getElementById('suggestions');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const productCardsContainer = document.getElementById('productCards');
+        const productCards = productCardsContainer ? productCardsContainer.getElementsByClassName('product-card') : [];
+        const allPenTitles = Array.from(productCards).map(card => card.querySelector('.card-title').innerText);
+        const sortSelect = document.getElementById('sortSelect');
+        const originalCardsOrder = Array.from(productCards);
+
+        const debounce = (func, delay) => {
+            let timeout;
+            return function (...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        };
+
+        const filterCards = (searchTerm) => {
+            let visibleCount = 0;
+            Array.from(productCards).forEach(card => {
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (noResultsMessage) {
+                noResultsMessage.style.display = visibleCount === 0 && searchTerm.length > 0 ? 'block' : 'none';
+            }
+        };
+
+        const handleSearch = () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            suggestionsDiv.innerHTML = '';
+
+            const filteredTitles = allPenTitles.filter(title => title.toLowerCase().includes(searchTerm));
+
+            if (searchTerm.length > 0) {
+                filteredTitles.forEach(title => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.classList.add('list-group-item', 'list-group-item-action', 'suggestion-item');
+                    suggestionItem.innerText = title;
+                    suggestionItem.onclick = (e) => {
+                        e.preventDefault();
+                        searchInput.value = title;
+                        suggestionsDiv.innerHTML = '';
+                        filterCards(title.toLowerCase());
+                    };
+                    suggestionsDiv.appendChild(suggestionItem);
+                });
+            }
+            filterCards(searchTerm);
+        };
+
+        searchInput.addEventListener('input', debounce(handleSearch, 300));
+        searchButton.addEventListener('click', () => {
+            filterCards(searchInput.value.toLowerCase());
+            suggestionsDiv.innerHTML = '';
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.position-relative')) {
+                suggestionsDiv.innerHTML = '';
+            }
+        });
+
+        const getPriceFromCard = (cardElement) => {
+            const priceP = Array.from(cardElement.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('price:'));
+            if (!priceP) return 0;
+
+            const priceText = priceP.innerText;
+            // Use a regex to extract the number, handles "TK 5.00", "tk 9.00", etc.
+            const priceMatch = priceText.match(/[\d\.]+/);
+            if (!priceMatch) return 0;
+
+            const price = parseFloat(priceMatch[0]);
+            return isNaN(price) ? 0 : price;
+        };
+
+        sortSelect.addEventListener('change', () => {
+            const sortValue = sortSelect.value;
+            const cardsArray = Array.from(productCards);
+
+            if (sortValue === 'default') {
+                originalCardsOrder.forEach(card => penCards.appendChild(card));
+                return;
+            }
+
+            cardsArray.sort((a, b) => {
+                const priceA = getPriceFromCard(a);
+                const priceB = getPriceFromCard(b);
+
+                if (sortValue === 'price-asc') {
+                    return priceA - priceB;
+                } else { // price-desc
+                    return priceB - priceA;
+                }
+            });
+
+            cardsArray.forEach(card => penCards.appendChild(card));
+        });
+        // Hide loader when the page is fully loaded
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 500); // Wait for fade out transition to complete
+            }
+        });
+
+        // --- Product Modal Logic ---
+        const productModalEl = document.getElementById('productModal');
+        if (productModalEl) {
+            const productModal = new bootstrap.Modal(productModalEl);
+            const modalImage = document.getElementById('modalProductImage');
+            const modalTitle = document.getElementById('modalProductTitle');
+            const modalPrice = document.getElementById('modalProductPrice');
+            const modalStock = document.getElementById('modalProductStock');
+            const buyNowForm = document.getElementById('buyNowForm');
+            const formProductName = document.getElementById('formProductName');
+
+            const cardsContainer = document.getElementById('productCards');
+            if (cardsContainer) {
+                cardsContainer.addEventListener('click', (e) => {
+                    // Only trigger modal if 'Buy Now' button is clicked
+                    if (!e.target.matches('.btn-success')) {
+                        return;
+                    }
+                    
+                    const card = e.target.closest('.card');
+
+                    e.preventDefault();
+
+                    // Get data from the card
+                    const imageSrc = card.querySelector('.card-img-top').src;
+                    const title = card.querySelector('.card-title').innerText;
+                    
+                    const priceEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('price:'));
+                    const stockEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('stock status:'));
+
+                    const price = priceEl ? priceEl.innerHTML : 'Price not available';
+                    const stock = stockEl ? stockEl.innerHTML : 'Stock status not available';
+
+                    // Populate the modal
+                    modalImage.src = imageSrc;
+                    modalTitle.innerText = title;
+                    modalPrice.innerHTML = price;
+                    modalStock.innerHTML = stock;
+                    if (formProductName) {
+                        formProductName.value = title;
+                    }
+
+                    // Show the modal
+                    productModal.show();
+                });
+            }
+
+            if (buyNowForm) {
+                buyNowForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const productName = document.getElementById('formProductName').value;
+                    const customerName = document.getElementById('formCustomerName').value;
+                    const customerPhone = document.getElementById('formCustomerPhone').value;
+                    const customerLocation = document.getElementById('formCustomerLocation').value;
+
+                    const whatsappNumber = '8801714637798'; // The shop's WhatsApp number
+
+                    let message = `Hello, I would like to inquire about a product.\n\n`;
+                    message += `Product: ${productName}\n`;
+                    message += `Name: ${customerName}\n`;
+                    message += `Phone: ${customerPhone}\n`;
+                    message += `Location: ${customerLocation}`;
+
+                    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+                    window.open(whatsappUrl, '_blank');
+
+                    this.reset();
+                    productModal.hide();
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

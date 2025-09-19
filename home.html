@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baroda Computers and Seals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --light-text: #ffffff;
+            --border-color: #dee2e6;
+            --footer-bg: #343a40;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .homenavbar { /* Renamed to avoid Bootstrap conflict */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: auto;
+        }
+
+        .homenavbar .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #006eff; /* Sky Blue */
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--dark-text);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/sites/2147499515/images/JhilnqhSpG6LUHnndMXo_d22c0d7c-11e1-489e-a0b2-846c336a6e68.jpg') no-repeat center center/cover;
+            color: var(--light-text);
+            text-align: center;
+            padding: 4rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .home-container { /* Renamed to avoid Bootstrap conflict */
+            width: 90%;
+            margin: auto;
+            padding: 20px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--light-text);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            color: var(--dark-text);
+        }
+
+        .product-info .price {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-info button {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .product-info button:hover {
+            background-color: #0056b3;
+        }
+
+        .team-section .product-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 1.5rem;
+        }
+
+        .team-section .product-card img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-section .product-info p {
+            font-size: 0.95rem;
+            margin-top: 8px;
+        }
+
+        .team-section .product-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .team-section .product-info a:hover {
+            color: var(--primary-color);
+        }
+
+        .contact-info {
+            text-align: center;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+        }
+
+        .contact-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--primary-color);
+        }
+
+        html[data-theme="dark"] {
+            --light-bg: #121212;
+            --dark-text: #e0e0e0;
+            --border-color: #333;
+            --secondary-color: #a0a0a0;
+            --footer-bg: #1c1c1c;
+        }
+
+        html[data-theme="dark"] header,
+        html[data-theme="dark"] .team-section .product-card,
+        html[data-theme="dark"] .contact-info {
+            background: rgba(30, 30, 30, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-switch-wrapper {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1001;
+        }
+
+        #theme-switcher {
+            /* Reset button styles */
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 0;
+            cursor: pointer;
+
+            /* Track styles */
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: var(--light-bg);
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+        #theme-switcher:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        .slider-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slider-thumb svg {
+            width: 16px;
+            height: 16px;
+            color: var(--light-text);
+        }
+        .slider-thumb .sun { display: none; }
+        .slider-thumb .moon { display: block; }
+
+        html[data-theme="dark"] .slider-thumb .sun { display: block; }
+        html[data-theme="dark"] .slider-thumb .moon { display: none; }
+        html[data-theme="dark"] #theme-switcher .slider-thumb {
+            transform: translateX(30px);
+            background-color: var(--primary-color);
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--light-text);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+
+        /* Loader Styles */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--light-bg);
+            z-index: 1050; /* Higher than header and theme switcher */
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-svg {
+            --uib-size: 82px;
+            --uib-speed: 0.8s;
+            --uib-bg-opacity: .1;
+            height: var(--uib-size);
+            width: var(--uib-size);
+            transform-origin: center;
+            overflow: visible;
+        }
+
+        .car {
+            fill: none;
+            stroke-dasharray: 15, 85;
+            stroke-dashoffset: 0;
+            stroke-linecap: round;
+            animation: travel var(--uib-speed) linear infinite, gradient-cycle 4s linear infinite;
+            will-change: stroke-dasharray, stroke-dashoffset;
+            transition: stroke 0.5s ease;
+        }
+
+        .track {
+            opacity: var(--uib-bg-opacity);
+            transition: stroke 0.5s ease;
+            animation: gradient-cycle 4s linear infinite;
+        }
+
+        @keyframes gradient-cycle {
+            0% {
+                stroke: #ff1900; /* red */
+            }
+            20% {
+                stroke: #2bff00; /* green */
+            }
+            40% {
+                stroke: #4400ff; /* blue */
+            }
+            60% {
+                stroke: #b700ff; /* violet */
+            }
+            80% {
+                stroke: #ff6600; /* orange */
+            }
+            100% {
+                stroke: #ff1900; /* red */
+            }
+        }
+
+        @keyframes travel {
+            0% {
+                stroke-dashoffset: 0;
+            }
+
+            100% {
+                stroke-dashoffset: -100;
+            }
+        }
+
+        /* Slideshow Styles */
+        .carousel-item img {
+            height: 50vh;
+            min-height: 350px;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 0.5rem;
+            padding-bottom: 1.25rem;
+            bottom: 1.25rem;
+        }
+
+        /* Smoother and faster carousel transition */
+        .carousel.carousel-fade .carousel-item {
+            transition: opacity .4s ease-in-out; /* Faster fade */
+        }
+    </style>
+</head>
+<body>
+    <div id="loader-wrapper" class="loader-wrapper">
+        <svg 
+            class="loader-svg" 
+            x="0px" 
+            y="0px" 
+            viewBox="0 0 40 40" 
+            height="40" 
+            width="40" 
+            preserveAspectRatio="xMidYMid meet">
+        <path 
+            class="track" 
+            fill="none" 
+            stroke-width="4" 
+            pathLength="100" 
+            d="M29.760000000000005 18.72 c0 7.28 -3.9200000000000004 13.600000000000001 -9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.840000000000002 2.64 c -3.6 0 -6.88 -0.96 -9.76 -2.64 c0 -7.28 3.9200000000000004 -13.52 9.840000000000002 -16.96 c2.8800000000000003 -1.6800000000000002 6.24 -2.64 9.76 -2.64 S26.880000000000003 17.040000000000003 29.760000000000005 18.72 c5.84 3.3600000000000003 9.76 9.68 9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.76 2.64 c -3.6 0 -6.88 -0.96 -9.840000000000002 -2.64 c -5.84 -3.3600000000000003 -9.76 -9.68 -9.76 -16.96 c0 -7.28 3.9200000000000004 -13.600000000000001 9.76 -16.96 C25.84 5.120000000000001 29.760000000000005 11.440000000000001 29.760000000000005 18.72z">
+        </path>
+        <path 
+            class="car" 
+            fill="none" 
+            stroke-width="4" 
+            pathLength="100" 
+            d="M29.760000000000005 18.72 c0 7.28 -3.9200000000000004 13.600000000000001 -9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.840000000000002 2.64 c -3.6 0 -6.88 -0.96 -9.76 -2.64 c0 -7.28 3.9200000000000004 -13.52 9.840000000000002 -16.96 c2.8800000000000003 -1.6800000000000002 6.24 -2.64 9.76 -2.64 S26.880000000000003 17.040000000000003 29.760000000000005 18.72 c5.84 3.3600000000000003 9.76 9.68 9.840000000000002 16.96 c -2.8800000000000003 1.6800000000000002 -6.24 2.64 -9.76 2.64 c -3.6 0 -6.88 -0.96 -9.840000000000002 -2.64 c -5.84 -3.3600000000000003 -9.76 -9.68 -9.76 -16.96 c0 -7.28 3.9200000000000004 -13.600000000000001 9.76 -16.96 C25.84 5.120000000000001 29.760000000000005 11.440000000000001 29.760000000000005 18.72z">
+        </path>
+        </svg>
+    </div>
+    <header>
+        <div class="homenavbar">
+            <a href="home.html" class="logo">Baroda Computers and Seals</a>
+            <nav class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="product.html">Products</a>
+                <a href="#contact">Contact Us</a>
+                <a href="#about-us">About Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Get the great product</h1>
+        <p>at unbeatable price.</p>
+        
+    </section>
+
+    <section class="container my-5">
+        <h2 class="section-title">Our Product Categories</h2>
+        <div id="productCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3500">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner rounded-3 shadow-lg">
+                <div class="carousel-item active">
+                    <img src="https://thumbs.dreamstime.com/b/sydney-australia-various-pens-display-stationery-shop-back-to-school-office-supplies-shopping-249508494.jpg" class="d-block w-100" alt="Pen Collection" fetchpriority="high">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Pen Collection</h5>
+                        <p><a href="pen.html" class="btn">See All Pens</a></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1593559962863-b47198dfd889?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDd8fHxlbnwwfHx8fHw%3D" class="d-block w-100" alt="Pencil Collection" loading="lazy">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Pencil Collection</h5>
+                        <p><a href="pencil.html" class="btn">See All Pencils</a></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://shodagor.com/public/uploads/all/rrQoJ.jpg" class="d-block w-100" alt="Paper Collection" loading="lazy">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Paper Collection</h5>
+                        <p><a href="product.html" class="btn">See All Papers</a></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://www.reelpaper.com/cdn/shop/articles/types-of-toilet-paper-what-are-they-what-makes-them-different-reel-talk-756384.jpg?v=1593016778&width=2000" class="d-block w-100" alt="Tissue Papers Collection" loading="lazy">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Tissue Papers</h5>
+                        <p><a href="tisue.html" class="btn">See All Tissue Papers</a></p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images-cdn.ubuy.co.in/646ef1be2b28373d1005aea1-multifunction-pencil-box-with.jpg" class="d-block w-100" alt="Pencil Boxes Collection" loading="lazy">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Pencil Box Collection</h5>
+                        <p><a href="pencil box.html" class="btn">See All Pencil Boxes</a></p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="home-container team-section">
+        <h2 class="section-title">Meet Our Shop Employees</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x200.png?text=Sanjoy+Kumar+Saha" alt="Team member Sanjoy Kumar Saha">
+                <div class="product-info">
+                    <h2>Sanjoy Kumar Saha</h2>
+                    <p>CEO</p>
+                    <p><a href="mailto:sanjoysaha30@yahoo.com">Email: sanjoysaha30@yahoo.com</a></p>
+                    <p><a href="tel:+8801762599017">Mobile: +8801762599017</a></p>
+                    <p><a href="https://wa.me/13477488835" target="_blank" rel="noopener noreferrer">WhatsApp: +1 (347) 748-8835</a></p>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x200.png?text=Kawser" alt="Team member Kawser">
+                <div class="product-info">
+                    <h3> SMK Kawser </h3>
+                    <p>Shop and Computer Management and Service Manager</p>
+                    <p><a href="https://wa.me/8801749913192" target="_blank" rel="noopener noreferrer">WhatsApp: +880 1749-913192</a></p>
+                    <p>Location: Singra, Natore</p>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x200.png?text=Pallab" alt="Team member Pallab">
+                <div class="product-info">
+                    <h3>Pallab</h3>
+                    <p>Shop Manager</p>
+                    <p><a href="https://wa.me/8801973342417" target="_blank" rel="noopener noreferrer">WhatsApp: +880 1973-342417</a></p>
+                    <p>Location: Singra, Natore</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-container" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-info h-100 d-flex flex-column justify-content-center">
+                    <h3 class="mb-4">Our Information</h3>
+                    <p><strong>Location:</strong> Upozila Road Court Field, Singra, Natore</p>
+                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/8801714637798" target="_blank" rel="noopener noreferrer">+880 1714-637798</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+8801714637798">+880 1714-637798</a></p>
+                    <p class="mt-4 fst-italic">Feel free to reach out to us directly via phone or WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-us" class="home-container">
+        <h2 class="section-title">About Us</h2>
+        <div class="contact-info" style="text-align: left; max-width: 800px; margin: auto;">
+            <p>Welcome to <strong>Baroda Computers and Seals</strong>, your one-stop shop for all your stationery andn coumputer services needs in Singra, Natore. Since our establishment, we have been dedicated to providing high-quality products and exceptional services to our community.</p>
+            <p>From pens and pencils to computer servises . We offer a wide range of products to meet the demands of students, professionals, and businesses alike. Our mission is to deliver reliable products at unbeatable prices, ensuring customer satisfaction is always our top priority.</p>
+            <p>Visit us at our location on Upozila Road Court Field to explore our collection and meet our friendly team!</p>
+            <p>Thank you all</p>
+        </div>
+    </section>
+
+    <div class="theme-switch-wrapper">
+        <button id="theme-switcher" aria-label="Toggle theme">
+            <span class="slider-thumb">
+                <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </span>
+        </button>
+    </div>
+
+    <footer>
+        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const themeSwitcher = document.getElementById('theme-switcher');
+        const htmlEl = document.documentElement;
+
+        function applyTheme(theme) {
+            htmlEl.setAttribute('data-theme', theme);
+        }
+
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else if (prefersDark) {
+            applyTheme('dark');
+        } else {
+            applyTheme('light'); // Default
+        }
+
+        // Switch theme on button click
+        themeSwitcher.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // Hide loader when the page is fully loaded
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 500); // Wait for fade out transition to complete
+            }
+        });
+
+    </script>
+</body>
+</html>
