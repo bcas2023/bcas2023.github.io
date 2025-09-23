@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,43 +26,46 @@
             line-height: 1.6;
         }
 
-        header {
-            background: rgba(255, 255, 255, 0.25);
+        .navbar-brand {
+            color: #0084ff !important; /* Sky Blue */
+            font-weight: bold;
+        }
+
+        .navbar.sticky-top {
+            background-color: rgba(var(--bs-tertiary-bg-rgb), 0.75) !important;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
         }
 
-        .homenavbar { /* Renamed to avoid Bootstrap conflict */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 90%;
-            margin: auto;
-        }
-
-        .homenavbar .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #006eff; /* Sky Blue */
-            text-decoration: none;
-        }
-
-        .nav-links a {
-            color: var(--dark-text);
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: 400;
+        .nav-link {
             transition: color 0.3s ease;
+            position: relative;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-bottom: 8px; /* space for underline */
         }
 
-        .nav-links a:hover {
-            color: var(--primary-color);
+        .nav-link:hover {
+            color: var(--bs-primary-text-emphasis);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bs-primary);
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: calc(100% - 1rem); /* Match padding */
         }
 
         .hero {
@@ -223,17 +226,17 @@
             color: var(--primary-color);
         }
 
-        html[data-theme="dark"] {
+        [data-bs-theme="dark"] {
             --light-bg: #121212;
             --dark-text: #e0e0e0;
             --border-color: #333;
             --secondary-color: #a0a0a0;
             --footer-bg: #1c1c1c;
+            --primary-color: #0d6efd; /* Ensure primary color is set for dark mode */
         }
 
-        html[data-theme="dark"] header,
-        html[data-theme="dark"] .team-section .product-card,
-        html[data-theme="dark"] .contact-info {
+        [data-bs-theme="dark"] .team-section .product-card,
+        [data-bs-theme="dark"] .contact-info {
             background: rgba(30, 30, 30, 0.5);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -287,9 +290,9 @@
         .slider-thumb .sun { display: none; }
         .slider-thumb .moon { display: block; }
 
-        html[data-theme="dark"] .slider-thumb .sun { display: block; }
-        html[data-theme="dark"] .slider-thumb .moon { display: none; }
-        html[data-theme="dark"] #theme-switcher .slider-thumb {
+        [data-bs-theme="dark"] .slider-thumb .sun { display: block; }
+        [data-bs-theme="dark"] .slider-thumb .moon { display: none; }
+        [data-bs-theme="dark"] #theme-switcher .slider-thumb {
             transform: translateX(30px);
             background-color: var(--primary-color);
         }
@@ -422,15 +425,31 @@
         </svg>
     </div>
     <header>
-        <div class="homenavbar">
-            <a href="home.html" class="logo">Baroda Computers and Seals</a>
-            <nav class="nav-links">
-                <a href="home.html">Home</a>
-                <a href="product.html">Products</a>
-                <a href="#contact">Contact Us</a>
-                <a href="#about-us">About Us</a>
-            </nav>
-        </div>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home.html">Baroda Computers and Seals</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
+                    aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="product.html">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about-us">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <section class="hero">
@@ -511,7 +530,7 @@
                 </div>
             </div>
             <div class="product-card">
-                <img src="https://via.placeholder.com/280x200.png?text=Kawser" alt="Team member Kawser">
+                <img src="https://github.com/bcas2023/bcas2023.github.io/blob/257c3a5d25f0b04f9bcc9d9c70c8bf27f1afa6c2/WhatsApp%20Image%202025-09-23%20at%2017.36.22_af92b5fd.jpg?raw=true" alt="Team member Kawser">
                 <div class="product-info">
                     <h3> SMK Kawser </h3>
                     <p>Shop and Computer Management and Service Manager</p>
@@ -520,7 +539,7 @@
                 </div>
             </div>
             <div class="product-card">
-                <img src="https://via.placeholder.com/280x200.png?text=Pallab" alt="Team member Pallab">
+                <img src="https://github.com/bcas2023/bcas2023.github.io/blob/257c3a5d25f0b04f9bcc9d9c70c8bf27f1afa6c2/WhatsApp%20Image%202025-09-23%20at%2017.36.32_d397f106.jpg?raw=true" alt="Team member Pallab">
                 <div class="product-info">
                     <h3>Pallab</h3>
                     <p>Shop Manager</p>
@@ -574,24 +593,24 @@
         const htmlEl = document.documentElement;
 
         function applyTheme(theme) {
-            htmlEl.setAttribute('data-theme', theme);
+            htmlEl.setAttribute('data-bs-theme', theme);
         }
 
         // Apply saved theme on load
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
+        let initialTheme = 'light';
         if (savedTheme) {
-            applyTheme(savedTheme);
+            initialTheme = savedTheme;
         } else if (prefersDark) {
-            applyTheme('dark');
-        } else {
-            applyTheme('light'); // Default
+            initialTheme = 'dark';
         }
+        applyTheme(initialTheme);
 
         // Switch theme on button click
         themeSwitcher.addEventListener('click', () => {
-            const currentTheme = htmlEl.getAttribute('data-theme');
+            const currentTheme = htmlEl.getAttribute('data-bs-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
