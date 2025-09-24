@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pencil Products</title>
+    <title>Baroad Computure and Seals</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -906,8 +906,12 @@
             <form id="buyNowForm" class="mt-3">
                 <input type="hidden" id="formProductName" name="productName">
                 <div class="mb-3">
+                    <label for="formProductQuantity" class="form-label">Quantity (pcs)</label>
+                    <input type="number" class="form-control" id="formProductQuantity" value="1" min="1" required>
+                </div>
+                <div class="mb-3">
                     <label for="formCustomerName" class="form-label">Your Name</label>
-                    <input type="text" class="form-control" id="formCustomerName" placeholder="John Doe" required>
+                    <input type="text" class="form-control" id="formCustomerName" placeholder="Your name" required>
                 </div>
                 <div class="mb-3">
                     <label for="formCustomerPhone" class="form-label">Phone Number</label>
@@ -917,6 +921,18 @@
                     <label for="formCustomerLocation" class="form-label">Your Location</label>
                     <input type="text" class="form-control" id="formCustomerLocation" placeholder="e.g., Singra, Natore" required>
                 </div>
+                <button type="button" class="btn btn-outline-secondary w-100 mb-2" id="addMoreProductsBtn">
+                    + Add More Products to Inquiry
+                </button>
+                <div id="moreProductsSection" class="mb-3" style="display: none;">
+                    <div class="input-group mb-2">
+                        <span class="input-group-text" id="search-addon">🔎</span>
+                        <input type="text" id="moreProductsSearch" class="form-control" placeholder="Search for other products..." aria-describedby="search-addon">
+                    </div>
+                    <div class="accordion" id="moreProductsAccordion" style="max-height: 250px; overflow-y: auto;"></div>
+                    <div id="moreProductsSearchResults" style="display: none; max-height: 250px; overflow-y: auto;"></div>
+                </div>
+
                 <p class="form-text text-danger small mb-3">Note: If you are out of Singra, Natore, you have to pay the courier service bill.</p>
                 <button type="submit" class="btn btn-primary w-100">Send Inquiry</button>
             </form>
@@ -950,6 +966,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const allProductsCategorized = {
+            "Erasers": ["Doms White Eraser", "TITI Jelly Eraser", "Non-Dust Eraser TR 5005", "Matador Woodmark Eraser", "Matador i-teen Eraser (Small)", "Petra Eraser Big (New, Black)", "Petra Eraser Big (Pink)", "Petra Eraser Small (White)", "Fresh Perfumed Eraser"],
+            "Glues & Adhesives": ["Glue Gun Big", "Glue Gun Small", "Sinthia Super Glue", "Magnet Super Glue", "Glue Stick NC", "Glue Gun Stick Big", "Glue Gun Stick Small", "MS Dolphin Glue", "Fevicol Super Glue", "Mega Super Glue", "Fevicol Water Glue", "Petra Glue Stick 15 gram", "Petra Glue Stick 8 gram", "Petra Water Glue 50 ml"],
+            "Pens": ["Fresh Allrounder", "Fresh Goodday", "Fresh Icon", "Fresh Spark", "Fresh Sprint", "Goodluck Anytime", "Goodluck Craze", "Goodluck Craze Blako", "Goodluck Express Ballpen", "Goodluck Fastgel Black", "Goodluck Fastgel Blue", "Goodluck Fastgel Green", "Goodluck Fastgel Red", "Goodluck Idea", "Goodluck Planet", "Goodluck Rose", "Goodluck School", "Goodluck Super Point", "Goodluck Topper", "Goodluck Topper Color", "Goodluck Ultima", "Matador Alltime", "Matador Hi School", "Matador i-teen Black Premium", "Matador Smoothy", "Matador Woodmark", "Matador Fiction Gel Pen", "Matador i-teen Gel Black", "Matador i-teen Gel Blue", "Matador i-teen Gel Green", "Matador i-teen Gel Red", "Matador Orbit Gel Pen", "Matador Claro Black", "Matador Glitter Pen", "Magic Pen"],
+            "Pencils & Colors": ["A.R.I Black Pencil 2B", "Classic Color Pencil 12 Pcs", "Deli Graphite Pencil 58100", "Doms Color Pencil Big", "Doms Color Pencil Half", "Doms Fusion Graphite Pencil", "Doms Super Dark Graphite Pencil", "Doms Super Dark Graphite Pencil (HB/2B)", "Doms X1 HB/2B Graphite Pencil", "Faber-Castell 2B Graphite Pencil", "Faber-Castell Red Matt HB Pencil", "Goal 4B Pencil", "Goal 6B Pencil", "Goal Black Matt 8B Pencil", "Goal Color Pencil Full 12 Pcs", "Goal Color Pencil Half", "Goldfaber 2B Pencil", "Goldfaber HB Pencil", "Good Luck Star Pencil", "Goodluck Color Pencil Big", "Goodluck Color Pencil Small", "Goodluck Color Pencil Tin 13 Pcs", "Goodluck Lily Pencil", "Goodluck Lotus Pencil", "Goodluck Radiant Pencil", "Graphite Pencil", "i-max Color Pencil", "Lead Pencil 7&7", "Matador Genius Pencil 2B", "Matador i-teen Color Pencil", "Matador i-teen Pencil", "Matador i-teen Rio Pencil 2B", "Matador Pluto Pencil 2B", "Matador Trio Pencil HB", "Mondete 2B Pencil", "Pencil Lead", "Petra Black Matt Pencil 2B", "Petra Classic Color Pencil 13 Pcs", "Petra Classic Color Pencil Big 24 Pcs", "Petra Classic Color Pencil Half Length", "Petra Classic Color Pencil Round Tin 13 Pcs", "Petra Classic Color Pencil Round Tin 24 Pcs", "Petra Mire Rubber Tip Pencil 2B", "Petra Orion Black Lead Pencil 2B", "Petra Pencil Water Color 24 Pcs", "Petra Phoenix Graphite Pencil 4B", "Petra Phoenix Graphite Pencil 6B", "Push Pencil Happy Bear", "USA Color Pencil Half 18 Pcs"],
+            "Tissues": ["Fresh Toilet Tissue", "Fresh Facial Tissue", "Goodluck Gold Toilet Tissue", "Bashundhara Pocket Tissue", "Bashundhara Perfumed Facial Tissue"],
+            "Paper Products": ["Bashundhara Demai Paper", "Bashundhara Legal Paper 80 GSM", "Bashundhara A4 Paper 100 GSM", "Bashundhara A4 Paper 80 GSM", "Bashundhara Legal Paper 65 GSM", "Bashundhara A4 Paper 65 GSM", "Paper Tech A4 65 GSM", "Bashundhara A3 Paper", "Bashundhara Demai 50 GSM", "Bashundhara A4 70 GSM", "Bashundhara A4 70 GSM (L)", "Happy Demai 21×34", "Fresh MS Demai 21×34", "Fresh A4 Paper 80 GSM", "Fresh Legal Paper 80 GSM", "Fresh A4 Paper 65 GSM", "Fresh Demai 10×16 (20 & 32 GSM)", "Fresh Demai 10.5×17 (21 & 34 GSM)"],
+            "Pencil Boxes": ["Pencil Box 6A", "Pencil Box VIP", "Matador Pencil Box Small", "Matador Woodmark Pencil Box", "Matador Double Decker Pencil Box", "Goodluck School Drama Carnival Pencil Box", "Goodluck Super Bard Pencil Box", "Goodluck Fish World Pencil Box (Too Small)", "Goodluck Peacock Pencil Box (Small)", "Goodluck Sea World Pencil Box", "Goodluck Micky Pencil Box", "Fresh Pencil Box"]
+        };
         const themeSwitcher = document.getElementById('theme-switcher');
         const htmlEl = document.documentElement;
 
@@ -1123,6 +1148,121 @@
             const modalStock = document.getElementById('modalProductStock');
             const buyNowForm = document.getElementById('buyNowForm');
             const formProductName = document.getElementById('formProductName');
+            const addMoreProductsBtn = document.getElementById('addMoreProductsBtn');
+            const moreProductsSection = document.getElementById('moreProductsSection');
+            const moreProductsAccordion = document.getElementById('moreProductsAccordion');
+            const moreProductsSearch = document.getElementById('moreProductsSearch');
+            const moreProductsSearchResults = document.getElementById('moreProductsSearchResults');
+            let moreProductsVisible = false;
+
+            function populateMoreProductsAccordion() {
+                const currentProduct = document.getElementById('modalProductTitle').innerText;
+                moreProductsAccordion.innerHTML = ''; // Clear previous
+
+                for (const category in allProductsCategorized) {
+                    const categoryId = `category-${category.replace(/[\s&]+/g, '')}`;
+                    const products = allProductsCategorized[category];
+
+                    const accordionItem = document.createElement('div');
+                    accordionItem.classList.add('accordion-item');
+                    accordionItem.innerHTML = `
+                        <h2 class="accordion-header" id="heading-${categoryId}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${categoryId}" aria-expanded="false" aria-controls="collapse-${categoryId}">
+                                ${category}
+                            </button>
+                        </h2>
+                        <div id="collapse-${categoryId}" class="accordion-collapse collapse" aria-labelledby="heading-${categoryId}">
+                            <div class="accordion-body"></div>
+                        </div>
+                    `;
+
+                    const accordionBody = accordionItem.querySelector('.accordion-body');
+                    products.forEach(productName => {
+                        if (productName === currentProduct) return;
+
+                        const productDiv = document.createElement('div');
+                        productDiv.classList.add('form-check', 'd-flex', 'align-items-center', 'mb-2', 'product-item');
+                        const checkboxId = `product-check-${productName.replace(/[\s()]+/g, '-')}`;
+
+                        productDiv.innerHTML = `
+                            <input class="form-check-input" type="checkbox" value="${productName}" id="${checkboxId}">
+                            <label class="form-check-label ms-2 flex-grow-1" for="${checkboxId}">${productName}</label>
+                            <input type="number" class="form-control form-control-sm" value="1" min="1" style="width: 70px;" disabled>
+                        `;
+                        accordionBody.appendChild(productDiv);
+                    });
+                    
+                    if (accordionBody.children.length > 0) {
+                        moreProductsAccordion.appendChild(accordionItem);
+                    }
+                }
+
+                moreProductsAccordion.addEventListener('change', (e) => {
+                    if (e.target.type === 'checkbox') {
+                        const quantityInput = e.target.closest('.form-check').querySelector('input[type="number"]');
+                        quantityInput.disabled = !e.target.checked;
+                    }
+                });
+            }
+
+            if (addMoreProductsBtn) {
+                addMoreProductsBtn.addEventListener('click', () => {
+                    moreProductsVisible = !moreProductsVisible;
+                    if (moreProductsVisible) {
+                        if (moreProductsAccordion.innerHTML.trim() === '') {
+                            populateMoreProductsAccordion();
+                        }
+                        moreProductsSection.style.display = 'block';
+                        addMoreProductsBtn.textContent = '- Hide Extra Products';
+                    } else {
+                        moreProductsSection.style.display = 'none';
+                        addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
+                    }
+                });
+            }
+
+            if (moreProductsSearch) {
+                moreProductsSearch.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase().trim();
+                    if (searchTerm === '') {
+                        moreProductsAccordion.style.display = 'block';
+                        moreProductsSearchResults.style.display = 'none';
+                        moreProductsSearchResults.innerHTML = '';
+                        return;
+                    }
+
+                    moreProductsAccordion.style.display = 'none';
+                    moreProductsSearchResults.style.display = 'block';
+                    moreProductsSearchResults.innerHTML = '';
+
+                    const allProductNames = Object.values(allProductsCategorized).flat();
+                    const filteredProducts = allProductNames.filter(name => name.toLowerCase().includes(searchTerm));
+
+                    if (filteredProducts.length === 0) {
+                        moreProductsSearchResults.innerHTML = '<p class="text-muted text-center small p-2">No products found.</p>';
+                    } else {
+                        const currentProduct = document.getElementById('modalProductTitle').innerText;
+                        filteredProducts.forEach(productName => {
+                            if (productName === currentProduct) return;
+                            const productDiv = document.createElement('div');
+                            productDiv.classList.add('form-check', 'd-flex', 'align-items-center', 'mb-2', 'product-item');
+                            const checkboxId = `product-search-check-${productName.replace(/[\s()]+/g, '-')}`;
+                            productDiv.innerHTML = `
+                                <input class="form-check-input" type="checkbox" value="${productName}" id="${checkboxId}">
+                                <label class="form-check-label ms-2 flex-grow-1" for="${checkboxId}">${productName}</label>
+                                <input type="number" class="form-control form-control-sm" value="1" min="1" style="width: 70px;" disabled>
+                            `;
+                            moreProductsSearchResults.appendChild(productDiv);
+                        });
+                    }
+                });
+                moreProductsSearchResults.addEventListener('change', (e) => {
+                    if (e.target.type === 'checkbox') {
+                        const quantityInput = e.target.closest('.form-check').querySelector('input[type="number"]');
+                        quantityInput.disabled = !e.target.checked;
+                    }
+                });
+            }
 
             const cardsContainer = document.getElementById('productCards');
             if (cardsContainer) {
@@ -1154,7 +1294,14 @@
                         formProductName.value = title;
                     }
 
-                    // Show the modal
+                    // Reset the 'more products' section when a new modal is opened
+                    if (moreProductsSection) moreProductsSection.style.display = 'none';
+                    if (moreProductsAccordion) moreProductsAccordion.innerHTML = '';
+                    if (moreProductsSearchResults) moreProductsSearchResults.innerHTML = '';
+                    if (moreProductsSearch) moreProductsSearch.value = '';
+                    if (addMoreProductsBtn) addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
+                    moreProductsVisible = false;
+
                     productModal.show();
                 });
             }
@@ -1163,6 +1310,7 @@
                 buyNowForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     const productName = document.getElementById('formProductName').value;
+                    const productQuantity = document.getElementById('formProductQuantity').value;
                     const customerName = document.getElementById('formCustomerName').value;
                     const customerPhone = document.getElementById('formCustomerPhone').value;
                     const customerLocation = document.getElementById('formCustomerLocation').value;
@@ -1171,19 +1319,144 @@
 
                     let message = `Hello, I would like to inquire about a product.\n\n`;
                     message += `Product: ${productName}\n`;
-                    message += `Name: ${customerName}\n`;
+                    message += `Quantity: ${productQuantity} pcs\n`;
+
+                    const additionalProducts = [];
+                    const checkedItems = document.querySelectorAll('#moreProductsAccordion .form-check-input:checked, #moreProductsSearchResults .form-check-input:checked');
+                    if (checkedItems.length > 0) {
+                        message += `\nAdditional Products:\n`;
+                        checkedItems.forEach(item => {
+                            const quantityInput = item.closest('.form-check').querySelector('input[type="number"]');
+                            message += `- ${item.value} (Qty: ${quantityInput.value})\n`;
+                        });
+                    }
+
+                    message += `\nName: ${customerName}\n`;
                     message += `Phone: ${customerPhone}\n`;
                     message += `Location: ${customerLocation}`;
 
                     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-
                     window.open(whatsappUrl, '_blank');
-
                     this.reset();
                     productModal.hide();
                 });
             }
         }
+
+            document.querySelectorAll('.product-card').forEach(card => {
+                const stockStatusSpan = card.querySelector('.out-of-stock');
+                if (stockStatusSpan) {
+                    const buyButton = card.querySelector('.btn-success');
+                    if (buyButton) {
+                        buyButton.textContent = 'Out of Stock';
+                        buyButton.classList.remove('btn-success');
+                        buyButton.classList.add('btn-danger');
+                        buyButton.disabled = true;
+                    }
+                }
+            });
+        ;
+    </script>
+</body>
+
+</html>
+                    });
+                });
+            }
+
+            const cardsContainer = document.getElementById('productCards');
+            if (cardsContainer) {
+                cardsContainer.addEventListener('click', (e) => {
+                    if (!e.target.matches('.btn-success')) {
+                        return;
+                    }
+                    const card = e.target.closest('.card');
+                    if (!card) return; // Click was not on a card
+
+                    e.preventDefault();
+
+                    // Get data from the card
+                    const imageSrc = card.querySelector('.card-img-top').src;
+                    const title = card.querySelector('.card-title').innerText;
+                    
+                    const priceEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('price:'));
+                    const stockEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('stock status:'));
+
+                    const price = priceEl ? priceEl.innerHTML : 'Price not available';
+                    const stock = stockEl ? stockEl.innerHTML : 'Stock status not available';
+
+                    // Populate the modal
+                    modalImage.src = imageSrc;
+                    modalTitle.innerText = title;
+                    modalPrice.innerHTML = price;
+                    modalStock.innerHTML = stock;
+                    if (formProductName) {
+                        formProductName.value = title;
+                    }
+
+                    // Reset the 'more products' section when a new modal is opened
+                    moreProductsSection.style.display = 'none';
+                    moreProductsContainer.innerHTML = '';
+                    if(moreProductsSearch) moreProductsSearch.value = '';
+                    addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
+                    moreProductsVisible = false;
+
+                    productModal.show();
+                });
+            }
+
+            if (buyNowForm) {
+                buyNowForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const productName = document.getElementById('formProductName').value;
+                    const productQuantity = document.getElementById('formProductQuantity').value;
+                    const customerName = document.getElementById('formCustomerName').value;
+                    const customerPhone = document.getElementById('formCustomerPhone').value;
+                    const customerLocation = document.getElementById('formCustomerLocation').value;
+
+                    const whatsappNumber = '8801714637798'; // The shop's WhatsApp number
+
+                    let message = `Hello, I would like to inquire about a product.\n\n`;
+                    message += `Product: ${productName}\n`;
+                    message += `Quantity: ${productQuantity} pcs\n`;
+
+                    const additionalProducts = [];
+                    const checkedItems = document.querySelectorAll('#moreProductsContainer .form-check-input:checked');
+                    if (checkedItems.length > 0) {
+                        checkedItems.forEach(item => {
+                            const quantityInput = item.closest('.form-check').querySelector('input[type="number"]');
+                            additionalProducts.push(`${item.value} (Qty: ${quantityInput.value})`);
+                        });
+                    }
+
+                    message += `Name: ${customerName}\n`;
+                    message += `Phone: ${customerPhone}\n`;
+                    message += `Location: ${customerLocation}`;
+
+                    if (additionalProducts.length > 0) {
+                        message += `\n\nAdditional Products:\n- ${additionalProducts.join('\n- ')}`;
+                    }
+                    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                    this.reset();
+                    productModal.hide();
+                });
+            }
+        }
+
+            document.querySelectorAll('.product-card').forEach(card => {
+                const stockStatusSpan = card.querySelector('.out-of-stock');
+                if (stockStatusSpan) {
+                    const buyButton = card.querySelector('.btn-success');
+                    if (buyButton) {
+                        buyButton.textContent = 'Out of Stock';
+                        buyButton.classList.remove('btn-success');
+                        buyButton.classList.add('btn-danger');
+                        buyButton.disabled = true;
+                    }
+                }
+            });
+        ;
     </script>
 </body>
 
