@@ -20,6 +20,7 @@
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
+            overflow: hidden; /* Hide scrollbar during loading */
             padding: 0;
             background-color: var(--light-bg);
             color: var(--dark-text);
@@ -72,7 +73,7 @@
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/sites/2147499515/images/JhilnqhSpG6LUHnndMXo_d22c0d7c-11e1-489e-a0b2-846c336a6e68.jpg') no-repeat center center/cover;
             color: var(--light-text);
             text-align: center;
-            padding: 4rem 1rem;
+            padding: 8rem 1rem;
             margin-bottom: 2rem;
         }
 
@@ -347,6 +348,24 @@
             }
         }
 
+        #announcement-bar {
+            background-color: var(--bs-primary);
+            color: var(--bs-light);
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            font-size: larger;
+        }
+        #announcement-bar span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
         /* Slideshow Styles */
         .carousel-item img {
             height: 50vh;
@@ -362,10 +381,14 @@
             bottom: 1.25rem;
         }
 
-        /* Smoother and faster carousel transition */
-        .carousel.carousel-fade .carousel-item {
-            transition: opacity .4s ease-in-out; /* Faster fade */
+        .carousel-item.text-slide {
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+        /* Smoother and faster carousel transition */
     </style>
 </head>
 <body>
@@ -411,6 +434,9 @@
                             <a class="nav-link" href="product.html">Products</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="updates.html">Updates</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#contact">Contact Us</a>
                         </li>
                         <li class="nav-item">
@@ -420,18 +446,21 @@
                 </div>
             </div>
         </nav>
+        <div id="announcement-bar">
+            <span>🌟 <strong> Welcome </strong> to <strong>Baroda Computers and Seals</strong>! Home PAGE .  Explore our wide range of Stationery . 🌟</span>
+        </div>
     </header>
 
     <section class="hero">
         <h1>Get the great product</h1>
-        <p>at unbeatable price.</p>
+        <p>at unbeatable price.</p> 
         
     </section>
 
     <section class="container my-5">
         <h2 class="section-title">Our Product Categories</h2>
-        <div id="productCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3500">
-            <div class="carousel-indicators">
+        <div id="productCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000">
+            <div class="carousel-indicators" >
                 <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -467,22 +496,7 @@
                         <p><a href="tisue.html" class="btn">See All Tissue Papers</a></p>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="https://images-cdn.ubuy.co.in/646ef1be2b28373d1005aea1-multifunction-pencil-box-with.jpg" class="d-block w-100" alt="Pencil Boxes Collection" loading="lazy">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Pencil Box Collection</h5>
-                        <p><a href="pencil box.html" class="btn">See All Pencil Boxes</a></p>
-                    </div>
-                </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
     </section>
 
@@ -592,9 +606,14 @@
             if (loader) {
                 loader.style.opacity = '0';
                 setTimeout(() => { loader.style.display = 'none'; }, 500); // Wait for fade out transition to complete
+                // Restore scrollbar after loader is gone
+                setTimeout(() => {
+                    document.body.style.overflow = 'auto';
+                }, 500);
             }
         });
 
     </script>
 </body>
 </html>
+
