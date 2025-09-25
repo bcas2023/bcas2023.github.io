@@ -47,14 +47,14 @@
         }
         
            .navbar-brand {
-            color: #006cfa !important; /* Sky Blue */
+            color: #0084ff !important; /* Sky Blue */
             font-weight: bold;
         }
         
 
 
         .navbar.sticky-top {
-            background-color: rgba(var(--bs-tertiary-bg-rgb), 0.75) !important;
+            background-color: rgba(var(--bs-tertiary-bg-rgb), 0.75) !important; /* Adjusted for consistency */
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -88,10 +88,32 @@
         .nav-link:hover::after {
             width: calc(100% - 1rem); /* Match padding */
         }
+        .nav-link.active::after {
+            width: calc(100% - 1rem);
+        }
+
+        #announcement-bar {
+            background-color: var(--bs-primary);
+            color: var(--bs-light);
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            font-size: larger;
+        }
+        #announcement-bar span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); } /* Adjusted for consistency */
+            100% { transform: translateX(-100%); } /* Adjusted for consistency */
+        }
 
         /* Loader Styles */
         .loader-wrapper {
-            position: fixed;
+            position: fixed; /* Adjusted for consistency */
             top: 0;
             left: 0;
             width: 100%;
@@ -105,7 +127,7 @@
         }
 
         .loader-svg {
-            --uib-size: 82px;
+            --uib-size: 82px; /* Adjusted for consistency */
             --uib-speed: 0.8s;
             --uib-bg-opacity: .1;
             height: var(--uib-size);
@@ -115,7 +137,7 @@
         }
 
         .car {
-            fill: none;
+            fill: none; /* Adjusted for consistency */
             stroke-dasharray: 15, 85;
             stroke-dashoffset: 0;
             stroke-linecap: round;
@@ -123,7 +145,7 @@
             will-change: stroke-dasharray, stroke-dashoffset;
             transition: stroke 0.5s ease;
         }
-
+        
         .track {
             opacity: var(--uib-bg-opacity);
             transition: stroke 0.5s ease;
@@ -182,7 +204,7 @@
         .suggestion-item:hover {
             background-color: rgba(var(--bs-primary-rgb), 0.15);
         }
-        /* Theme Switcher Styles */
+        /* Theme Switcher Styles */ /* Adjusted for consistency */
         .theme-switch-wrapper {
             position: fixed;
             bottom: 1.5rem;
@@ -190,7 +212,7 @@
             z-index: 1001;
         }
 
-        #theme-switcher {
+        #theme-switcher { /* Adjusted for consistency */
             background: none;
             border: 1px solid var(--bs-border-color-translucent);
             padding: 0;
@@ -203,12 +225,12 @@
             transition: background-color 0.3s ease;
         }
 
-        #theme-switcher:focus-visible {
+        #theme-switcher:focus-visible { /* Adjusted for consistency */
             outline: 2px solid var(--bs-primary);
             outline-offset: 2px;
         }
 
-        .slider-thumb {
+        .slider-thumb { /* Adjusted for consistency */
             position: absolute;
             top: 2px;
             left: 2px;
@@ -222,21 +244,21 @@
             justify-content: center;
         }
 
-        .slider-thumb svg {
+        .slider-thumb svg { /* Adjusted for consistency */
             width: 16px;
             height: 16px;
             color: var(--bs-body-bg);
         }
 
-        .slider-thumb .sun {
+        .slider-thumb .sun { /* Adjusted for consistency */
             display: none;
         }
 
-        .slider-thumb .moon {
+        .slider-thumb .moon { /* Adjusted for consistency */
             display: block;
         }
 
-        [data-bs-theme="dark"] .slider-thumb .sun {
+        [data-bs-theme="dark"] .slider-thumb .sun { /* Adjusted for consistency */
             display: block;
         }
 
@@ -244,7 +266,7 @@
             display: none;
         }
 
-        [data-bs-theme="dark"] #theme-switcher .slider-thumb {
+        [data-bs-theme="dark"] #theme-switcher .slider-thumb { /* Adjusted for consistency */
             transform: translateX(30px);
             background-color: var(--bs-primary);
         }
@@ -279,6 +301,9 @@
                         <a class="nav-link" href="product.html">Products</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="updates.html">Updates</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="home.html#contact">Contact Us</a>
                     </li>
                     <li class="nav-item">
@@ -288,6 +313,10 @@
             </div>
         </div>
     </nav>
+
+    <div id="announcement-bar">
+        <span>🌟 <strong>Welcome</strong> to <strong>Baroda Computers and Seals</strong>! | eraser page 🌟</span>
+    </div>
     <div id="main-content" class="container py-5" style="display: none;">
         <h2 class="text-center mb-4">Eraser &amp; Rubber Products</h2>
         <div class="row align-items-center justify-content-center mb-5">
@@ -503,6 +532,7 @@
             "Erasers": ["Doms White Eraser", "TITI Jelly Eraser", "Non-Dust Eraser TR 5005", "Matador Woodmark Eraser", "Matador i-teen Eraser (Small)", "Petra Eraser Big (New, Black)", "Petra Eraser Big (Pink)", "Petra Eraser Small (White)", "Fresh Perfumed Eraser"],
             "Glues & Adhesives": ["Glue Gun Big", "Glue Gun Small", "Sinthia Super Glue", "Magnet Super Glue", "Glue Stick NC", "Glue Gun Stick Big", "Glue Gun Stick Small", "MS Dolphin Glue", "Fevicol Super Glue", "Mega Super Glue", "Fevicol Water Glue", "Petra Glue Stick 15 gram", "Petra Glue Stick 8 gram", "Petra Water Glue 50 ml"],
             "Pens": ["Fresh Allrounder", "Fresh Goodday", "Fresh Icon", "Fresh Spark", "Fresh Sprint", "Goodluck Anytime", "Goodluck Craze", "Goodluck Craze Blako", "Goodluck Express Ballpen", "Goodluck Fastgel Black", "Goodluck Fastgel Blue", "Goodluck Fastgel Green", "Goodluck Fastgel Red", "Goodluck Idea", "Goodluck Planet", "Goodluck Rose", "Goodluck School", "Goodluck Super Point", "Goodluck Topper", "Goodluck Topper Color", "Goodluck Ultima", "Matador Alltime", "Matador Hi School", "Matador i-teen Black Premium", "Matador Smoothy", "Matador Woodmark", "Matador Fiction Gel Pen", "Matador i-teen Gel Black", "Matador i-teen Gel Blue", "Matador i-teen Gel Green", "Matador i-teen Gel Red", "Matador Orbit Gel Pen", "Matador Claro Black", "Matador Glitter Pen", "Magic Pen"],
+            "Sharpeners": ["Digni Sharpener (0001000)", "Bullet Sharpener", "Digni Sharpener", "Fresh Premium Sharpener", "Matador Smoothy Sharpener"],
             "Pencils & Colors": ["A.R.I Black Pencil 2B", "Classic Color Pencil 12 Pcs", "Deli Graphite Pencil 58100", "Doms Color Pencil Big", "Doms Color Pencil Half", "Doms Fusion Graphite Pencil", "Doms Super Dark Graphite Pencil", "Doms Super Dark Graphite Pencil (HB/2B)", "Doms X1 HB/2B Graphite Pencil", "Faber-Castell 2B Graphite Pencil", "Faber-Castell Red Matt HB Pencil", "Goal 4B Pencil", "Goal 6B Pencil", "Goal Black Matt 8B Pencil", "Goal Color Pencil Full 12 Pcs", "Goal Color Pencil Half", "Goldfaber 2B Pencil", "Goldfaber HB Pencil", "Good Luck Star Pencil", "Goodluck Color Pencil Big", "Goodluck Color Pencil Small", "Goodluck Color Pencil Tin 13 Pcs", "Goodluck Lily Pencil", "Goodluck Lotus Pencil", "Goodluck Radiant Pencil", "Graphite Pencil", "i-max Color Pencil", "Lead Pencil 7&7", "Matador Genius Pencil 2B", "Matador i-teen Color Pencil", "Matador i-teen Pencil", "Matador i-teen Rio Pencil 2B", "Matador Pluto Pencil 2B", "Matador Trio Pencil HB", "Mondete 2B Pencil", "Pencil Lead", "Petra Black Matt Pencil 2B", "Petra Classic Color Pencil 13 Pcs", "Petra Classic Color Pencil Big 24 Pcs", "Petra Classic Color Pencil Half Length", "Petra Classic Color Pencil Round Tin 13 Pcs", "Petra Classic Color Pencil Round Tin 24 Pcs", "Petra Mire Rubber Tip Pencil 2B", "Petra Orion Black Lead Pencil 2B", "Petra Pencil Water Color 24 Pcs", "Petra Phoenix Graphite Pencil 4B", "Petra Phoenix Graphite Pencil 6B", "Push Pencil Happy Bear", "USA Color Pencil Half 18 Pcs"],
             "Pencil Boxes": ["Pencil Box 6A", "Pencil Box VIP", "Matador Pencil Box Small", "Matador Woodmark Pencil Box", "Matador Double Decker Pencil Box", "Goodluck School Drama Carnival Pencil Box", "Goodluck Super Bard Pencil Box", "Goodluck Fish World Pencil Box (Too Small)", "Goodluck Peacock Pencil Box (Small)", "Goodluck Sea World Pencil Box", "Goodluck Micky Pencil Box", "Fresh Pencil Box"],
             "Tissues": ["Fresh Toilet Tissue", "Fresh Facial Tissue", "Goodluck Gold Toilet Tissue", "Bashundhara Pocket Tissue", "Bashundhara Perfumed Facial Tissue"],
