@@ -208,6 +208,25 @@
             transform: translateX(30px);
             background-color: var(--bs-primary);
         }
+
+        #announcement-bar {
+            background-color: var(--bs-primary);
+            color: var(--bs-light);
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            font-size: larger;
+        }
+        #announcement-bar span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
@@ -241,6 +260,9 @@
                         <a class="nav-link active" href="product.html">Products</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="updates.html">Updates</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="home.html#contact">Contact Us</a>
                     </li>
                     <li class="nav-item">
@@ -250,6 +272,9 @@
             </div>
         </div>
     </nav>
+    <div id="announcement-bar">
+        <span>🌟 <strong>Welcome</strong> to <strong>Baroda Computers and Seals</strong>! Products page . 🌟</span>
+    </div>
 
     <div class="featured-products">
         <div class="container">
@@ -268,7 +293,7 @@
                 <!-- Card: All Pens -->
                 <div class="col-md-6 col-lg-4 d-flex justify-content-center product-card-wrapper">
                     <div class="card h-100" style="width: 18rem;">
-                        <img src="https://thumbs.dreamstime.com/b/sydney-australia-various-pens-display-stationery-shop-back-to-school-office-supplies-shopping-249508494.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="All Pens Collection">
+                        <img src="https://thumbs.dreamstime.com/b/sydney-australia-various-pens-display-stationery-shop-back-to-school-office-supplies-shopping-249508494.jpg" class="card-img-top product-img" alt="All Pens Collection">
                         <div class="card-body d-flex flex-column text-center">
                             <h5 class="card-title">Pen Collection</h5>
                             <a href="pen.html" class="btn btn-primary mt-auto">See All Pens</a>
@@ -278,7 +303,7 @@
                 <!-- Card: All Pencils -->
                 <div class="col-md-6 col-lg-4 d-flex justify-content-center product-card-wrapper">
                     <div class="card h-100" style="width: 18rem;">
-                        <img src="https://images.unsplash.com/photo-1593559962863-b47198dfd889?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDd8fHxlbnwwfHx8fHw%3D" class="card-img-top" style="height: 200px; object-fit: cover;" alt="All Pencils Collection">
+                        <img src="https://images.unsplash.com/photo-1593559962863-b47198dfd889?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDd8fHxlbnwwfHx8fHw%3D" class="card-img-top product-img" alt="All Pencils Collection">
                         <div class="card-body d-flex flex-column text-center">
                             <h5 class="card-title">Pencil Collection</h5>
                             <a href="pencil.html" class="btn btn-primary mt-auto">See All Pencils</a>
@@ -288,7 +313,7 @@
                 <!-- Card: All Papers -->
                 <div class="col-md-6 col-lg-4 d-flex justify-content-center product-card-wrapper">
                     <div class="card h-100" style="width: 18rem;">
-                        <img src="https://shodagor.com/public/uploads/all/rrQoJ.jpg" class="card-img-top" style="height: 200px; object-fit: cover;" alt="All Papers Collection">
+                        <img src="https://shodagor.com/public/uploads/all/rrQoJ.jpg" class="card-img-top product-img" alt="All Papers Collection">
                         <div class="card-body d-flex flex-column text-center">
                             <h5 class="card-title">Paper Collection</h5>
                             <a href="paper.html" class="btn btn-primary mt-auto">See All Papers</a>
@@ -332,6 +357,16 @@
                         <div class="card-body d-flex flex-column text-center">
                             <h5 class="card-title">Eraser Collection</h5>
                             <a href="rubber.html" class="btn btn-primary mt-auto">See All Erasers</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card: Sharpener Collection -->
+                <div class="col-md-6 col-lg-4 d-flex justify-content-center product-card-wrapper">
+                    <div class="card h-100" style="width: 18rem;">
+                        <img src="https://matador.com.bd/stationery/admin/uploads/product/matador-smoothy-pencil-sharpener/1704172536akHTm.jpg" class="card-img-top product-img" alt="Sharpener Collection">
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title">Sharpener Collection</h5>
+                            <a href="sharpener.html" class="btn btn-primary mt-auto">See All Sharpeners</a>
                         </div>
                     </div>
                 </div>
@@ -483,6 +518,7 @@
                 { name: 'Deli Graphite Pencil 58100', price: 'TK 9.00/pcs', stock: 'In Stock', image: 'https://img.drz.lazcdn.com/g/kf/S5abfe1929d4f4108a8cda927da98eeb3Y.jpg_720x720q80.jpg', page: 'pencil.html' },
                 // ... Add all other products from all files here
             ];
+            // TODO: For a comprehensive search on this page, consider consolidating all product data from other pages here.
 
             const searchInput = document.getElementById('productSearchInput');
             const searchButton = document.getElementById('productSearchButton');
