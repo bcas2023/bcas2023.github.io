@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baroda Computers and seals</title>
+    <title>Baroda Computers and Seals </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -104,6 +104,25 @@
             width: calc(100% - 1rem); /* Match padding */
         }
 
+        #announcement-bar {
+            background-color: var(--bs-primary);
+            color: var(--bs-light);
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            font-size: larger;
+        }
+        #announcement-bar span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
         /* Search and Suggestions */
         #suggestions.list-group {
             max-height: 200px;
@@ -139,8 +158,11 @@
             object-fit: contain;
             padding: 1rem;
         }
-        .in-stock { color: #00ff0d; font-weight: 500; }
-        .out-of-stock { color: #ff0000; font-weight: 500; }
+        .in-stock {
+            color: var(--bs-success);
+            font-weight: 500;
+        }
+        .out-of-stock { color: var(--bs-danger); font-weight: 500; }
 
         /* Theme Switcher Styles */
         .theme-switch-wrapper {
@@ -224,6 +246,9 @@
                         <a class="nav-link" href="product.html">Products</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="updates.html">Updates</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="home.html#contact">Contact Us</a>
                     </li>
                     <li class="nav-item">
@@ -233,8 +258,12 @@
             </div>
         </div>
     </nav>
+    <div id="announcement-bar">
+        <span>🌟 <strong>Welcome</strong> to <strong>Baroda Computers and Seals</strong>! | Pencil Box page 🌟</span>
+    </div>
 
     <div class="container py-5" style="display: none;" id="main-content">
+        <h2 class="text-center mb-4">Pencil Box Products</h2>
         <div class="row align-items-center justify-content-center mb-5">
             <div class="col-auto">
                 <select class="form-select" id="sortSelect" aria-label="Sort by">
@@ -470,11 +499,11 @@
             "Erasers": ["Doms White Eraser", "TITI Jelly Eraser", "Non-Dust Eraser TR 5005", "Matador Woodmark Eraser", "Matador i-teen Eraser (Small)", "Petra Eraser Big (New, Black)", "Petra Eraser Big (Pink)", "Petra Eraser Small (White)", "Fresh Perfumed Eraser"],
             "Glues & Adhesives": ["Glue Gun Big", "Glue Gun Small", "Sinthia Super Glue", "Magnet Super Glue", "Glue Stick NC", "Glue Gun Stick Big", "Glue Gun Stick Small", "MS Dolphin Glue", "Fevicol Super Glue", "Mega Super Glue", "Fevicol Water Glue", "Petra Glue Stick 15 gram", "Petra Glue Stick 8 gram", "Petra Water Glue 50 ml"],
             "Pens": ["Fresh Allrounder", "Fresh Goodday", "Fresh Icon", "Fresh Spark", "Fresh Sprint", "Goodluck Anytime", "Goodluck Craze", "Goodluck Craze Blako", "Goodluck Express Ballpen", "Goodluck Fastgel Black", "Goodluck Fastgel Blue", "Goodluck Fastgel Green", "Goodluck Fastgel Red", "Goodluck Idea", "Goodluck Planet", "Goodluck Rose", "Goodluck School", "Goodluck Super Point", "Goodluck Topper", "Goodluck Topper Color", "Goodluck Ultima", "Matador Alltime", "Matador Hi School", "Matador i-teen Black Premium", "Matador Smoothy", "Matador Woodmark", "Matador Fiction Gel Pen", "Matador i-teen Gel Black", "Matador i-teen Gel Blue", "Matador i-teen Gel Green", "Matador i-teen Gel Red", "Matador Orbit Gel Pen", "Matador Claro Black", "Matador Glitter Pen", "Magic Pen"],
+            "Sharpeners": ["Digni Sharpener (0001000)", "Bullet Sharpener", "Digni Sharpener", "Fresh Premium Sharpener", "Matador Smoothy Sharpener"],
             "Pencils & Colors": ["A.R.I Black Pencil 2B", "Classic Color Pencil 12 Pcs", "Deli Graphite Pencil 58100", "Doms Color Pencil Big", "Doms Color Pencil Half", "Doms Fusion Graphite Pencil", "Doms Super Dark Graphite Pencil", "Doms Super Dark Graphite Pencil (HB/2B)", "Doms X1 HB/2B Graphite Pencil", "Faber-Castell 2B Graphite Pencil", "Faber-Castell Red Matt HB Pencil", "Goal 4B Pencil", "Goal 6B Pencil", "Goal Black Matt 8B Pencil", "Goal Color Pencil Full 12 Pcs", "Goal Color Pencil Half", "Goldfaber 2B Pencil", "Goldfaber HB Pencil", "Good Luck Star Pencil", "Goodluck Color Pencil Big", "Goodluck Color Pencil Small", "Goodluck Color Pencil Tin 13 Pcs", "Goodluck Lily Pencil", "Goodluck Lotus Pencil", "Goodluck Radiant Pencil", "Graphite Pencil", "i-max Color Pencil", "Lead Pencil 7&7", "Matador Genius Pencil 2B", "Matador i-teen Color Pencil", "Matador i-teen Pencil", "Matador i-teen Rio Pencil 2B", "Matador Pluto Pencil 2B", "Matador Trio Pencil HB", "Mondete 2B Pencil", "Pencil Lead", "Petra Black Matt Pencil 2B", "Petra Classic Color Pencil 13 Pcs", "Petra Classic Color Pencil Big 24 Pcs", "Petra Classic Color Pencil Half Length", "Petra Classic Color Pencil Round Tin 13 Pcs", "Petra Classic Color Pencil Round Tin 24 Pcs", "Petra Mire Rubber Tip Pencil 2B", "Petra Orion Black Lead Pencil 2B", "Petra Pencil Water Color 24 Pcs", "Petra Phoenix Graphite Pencil 4B", "Petra Phoenix Graphite Pencil 6B", "Push Pencil Happy Bear", "USA Color Pencil Half 18 Pcs"],
             "Pencil Boxes": ["Pencil Box 6A", "Pencil Box VIP", "Matador Pencil Box Small", "Matador Woodmark Pencil Box", "Matador Double Decker Pencil Box", "Goodluck School Drama Carnival Pencil Box", "Goodluck Super Bard Pencil Box", "Goodluck Fish World Pencil Box (Too Small)", "Goodluck Peacock Pencil Box (Small)", "Goodluck Sea World Pencil Box", "Goodluck Micky Pencil Box", "Fresh Pencil Box"],
             "Tissues": ["Fresh Toilet Tissue", "Fresh Facial Tissue", "Goodluck Gold Toilet Tissue", "Bashundhara Pocket Tissue", "Bashundhara Perfumed Facial Tissue"],
             "Paper Products": ["Bashundhara Demai Paper", "Bashundhara Legal Paper 80 GSM", "Bashundhara A4 Paper 100 GSM", "Bashundhara A4 Paper 80 GSM", "Bashundhara Legal Paper 65 GSM", "Bashundhara A4 Paper 65 GSM", "Paper Tech A4 65 GSM", "Bashundhara A3 Paper", "Bashundhara Demai 50 GSM", "Bashundhara A4 70 GSM", "Bashundhara A4 70 GSM (L)", "Happy Demai 21×34", "Fresh MS Demai 21×34", "Fresh A4 Paper 80 GSM", "Fresh Legal Paper 80 GSM", "Fresh A4 Paper 65 GSM", "Fresh Demai 10×16 (20 & 32 GSM)", "Fresh Demai 10.5×17 (21 & 34 GSM)"],
-            "Pencil Boxes": ["Pencil Box 6A", "Pencil Box VIP", "Matador Pencil Box Small", "Matador Woodmark Pencil Box", "Matador Double Decker Pencil Box", "Goodluck School Drama Carnival Pencil Box", "Goodluck Super Bard Pencil Box", "Goodluck Fish World Pencil Box (Too Small)", "Goodluck Peacock Pencil Box (Small)", "Goodluck Sea World Pencil Box", "Goodluck Micky Pencil Box", "Fresh Pencil Box"]
         };
         const themeSwitcher = document.getElementById('theme-switcher');
         const htmlEl = document.documentElement;
