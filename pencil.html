@@ -1387,108 +1387,240 @@
                 }
             });
         });
-    </script>
-</body>
+<script>
+    // ----------------------------------------------------------------------
+    // 1. Data Extraction (Initial product list)
+    // ----------------------------------------------------------------------
 
-</html>
-                    });
-                });
-            }
+    const productCardsContainer = document.getElementById('productCards');
+    const productSearchInput = document.getElementById('productSearchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const suggestionsContainer = document.getElementById('suggestions');
+    const productsData = [];
 
-            const cardsContainer = document.getElementById('productCards');
-            if (cardsContainer) {
-                cardsContainer.addEventListener('click', (e) => {
-                    if (!e.target.matches('.btn-success')) {
-                        return;
-                    }
-                    const card = e.target.closest('.card');
-                    if (!card) return; // Click was not on a card
+    // Extract data from the existing HTML structure
+    const extractProducts = () => {
+        const cards = productCardsContainer.querySelectorAll('.product-card');
+        productsData.length = 0; // Clear array for re-extraction if needed
 
-                    e.preventDefault();
+        cards.forEach((card, index) => {
+            const titleElement = card.querySelector('.card-title');
+            const priceText = card.querySelector('.card-text:nth-child(2)').textContent;
+            const stockStatusText = card.querySelector('.card-text:nth-child(3) span').textContent;
+            const imageElement = card.querySelector('.card-img-top');
 
-                    // Get data from the card
-                    const imageSrc = card.querySelector('.card-img-top').src;
-                    const title = card.querySelector('.card-title').innerText;
-                    
-                    const priceEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('price:'));
-                    const stockEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('stock status:'));
+            // Sanitize and parse data
+            const priceMatch = priceText.match(/TK\s([\d\.]+)\/pcs/);
+            const price = priceMatch ? parseFloat(priceMatch[1]) : 0;
+            const inStock = stockStatusText.trim() === 'In Stock';
 
-                    const price = priceEl ? priceEl.innerHTML : 'Price not available';
-                    const stock = stockEl ? stockEl.innerHTML : 'Stock status not available';
+            productsData.push({
+                id: index, // Use index as a simple unique ID
+                title: titleElement.textContent.trim(),
+                price: price,
+                inStock: inStock,
+                cardHTML: card.outerHTML // Store the original HTML for re-rendering
+            });
+        });
+        // console.log('Extracted Products:', productsData); // Debugging line
+    };
 
-                    // Populate the modal
-                    modalImage.src = imageSrc;
-                    modalTitle.innerText = title;
-                    modalPrice.innerHTML = price;
-                    modalStock.innerHTML = stock;
-                    if (formProductName) {
-                        formProductName.value = title;
-                    }
+    // ----------------------------------------------------------------------
+    // 2. Rendering Function
+    // ----------------------------------------------------------------------
 
-                    // Reset the 'more products' section when a new modal is opened
-                    moreProductsSection.style.display = 'none';
-                    moreProductsContainer.innerHTML = '';
-                    if(moreProductsSearch) moreProductsSearch.value = '';
-                    addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
-                    moreProductsVisible = false;
-
-                    productModal.show();
-                });
-            }
-
-            if (buyNowForm) {
-                buyNowForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const productName = document.getElementById('formProductName').value;
-                    const productQuantity = document.getElementById('formProductQuantity').value;
-                    const customerName = document.getElementById('formCustomerName').value;
-                    const customerPhone = document.getElementById('formCustomerPhone').value;
-                    const customerLocation = document.getElementById('formCustomerLocation').value;
-
-                    const whatsappNumber = '8801714637798'; // The shop's WhatsApp number
-
-                    let message = `Hello, I would like to inquire about a product.\n\n`;
-                    message += `Product: ${productName}\n`;
-                    message += `Quantity: ${productQuantity} pcs\n`;
-
-                    const additionalProducts = [];
-                    const checkedItems = document.querySelectorAll('#moreProductsContainer .form-check-input:checked');
-                    if (checkedItems.length > 0) {
-                        checkedItems.forEach(item => {
-                            const quantityInput = item.closest('.form-check').querySelector('input[type="number"]');
-                            additionalProducts.push(`${item.value} (Qty: ${quantityInput.value})`);
-                        });
-                    }
-
-                    message += `Name: ${customerName}\n`;
-                    message += `Phone: ${customerPhone}\n`;
-                    message += `Location: ${customerLocation}`;
-
-                    if (additionalProducts.length > 0) {
-                        message += `\n\nAdditional Products:\n- ${additionalProducts.join('\n- ')}`;
-                    }
-                    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-                    window.open(whatsappUrl, '_blank');
-                    this.reset();
-                    productModal.hide();
-                });
-            }
+    const renderProducts = (productsToRender) => {
+        productCardsContainer.innerHTML = '';
+        if (productsToRender.length === 0) {
+            productCardsContainer.innerHTML = '<div class="col-12"><div class="alert alert-warning text-center" role="alert">No pencils found matching your search criteria.</div></div>';
+            return;
         }
 
-            document.querySelectorAll('.product-card').forEach(card => {
-                const stockStatusSpan = card.querySelector('.out-of-stock');
-                if (stockStatusSpan) {
-                    const buyButton = card.querySelector('.btn-success');
-                    if (buyButton) {
-                        buyButton.textContent = 'Out of Stock';
-                        buyButton.classList.remove('btn-success');
-                        buyButton.classList.add('btn-danger');
-                        buyButton.disabled = true;
-                    }
-                }
-            });
-        ;
-    </script>
-</body>
+        productsToRender.forEach(product => {
+            const div = document.createElement('div');
+            div.className = 'col-md-4 product-card';
+            div.setAttribute('data-product-id', product.id);
+            // We use the stored original HTML, which is a bit inefficient but respects
+            // the exact original card structure for simplicity.
+            div.outerHTML = product.cardHTML;
+        });
+        
+        // Re-append the newly created elements to the container after the loop
+        // is safer. However, since the prompt includes the initial cards in HTML
+        // we will stick to a simpler re-render logic that relies on innerHTML assignment
+        // for quick replacement based on the filtered list.
+        
+        // A more robust re-render after filtering/sorting:
+        let newHTML = '';
+        productsToRender.forEach(product => {
+             newHTML += product.cardHTML; // Assume cardHTML contains the full column div
+        });
+        productCardsContainer.innerHTML = newHTML;
+    };
 
-</html>
+    // ----------------------------------------------------------------------
+    // 3. Search and Filter/Sort Logic
+    // ----------------------------------------------------------------------
+
+    const applySearchAndSort = () => {
+        const query = productSearchInput.value.toLowerCase().trim();
+        const sortBy = sortSelect.value;
+
+        // 1. Filter based on search query
+        let filteredProducts = productsData.filter(product =>
+            product.title.toLowerCase().includes(query)
+        );
+
+        // 2. Sort the filtered results
+        filteredProducts.sort((a, b) => {
+            if (sortBy === 'price-asc') {
+                return a.price - b.price;
+            } else if (sortBy === 'price-desc') {
+                return b.price - a.price;
+            } else if (sortBy === 'stock-in-out') {
+                // In Stock (true) comes before Out of Stock (false)
+                return (b.inStock ? 1 : 0) - (a.inStock ? 1 : 0);
+            } else if (sortBy === 'stock-out-in') {
+                // Out of Stock (false) comes before In Stock (true)
+                return (a.inStock ? 1 : 0) - (b.inStock ? 1 : 0);
+            }
+            return a.id - b.id; // Default/stable sort by original order
+        });
+
+        renderProducts(filteredProducts);
+    };
+
+    // ----------------------------------------------------------------------
+    // 4. Search Suggestions Logic
+    // ----------------------------------------------------------------------
+
+    const updateSuggestions = () => {
+        const query = productSearchInput.value.toLowerCase().trim();
+        suggestionsContainer.innerHTML = '';
+
+        if (query.length === 0) {
+            return;
+        }
+
+        const matches = productsData
+            .filter(product => product.title.toLowerCase().includes(query))
+            .slice(0, 5); // Show top 5 suggestions
+
+        matches.forEach(product => {
+            const item = document.createElement('a');
+            item.href = '#';
+            item.className = 'list-group-item list-group-item-action suggestion-item';
+            
+            // Highlight the matching part (basic implementation)
+            const highlightedText = product.title.replace(
+                new RegExp(query, 'gi'),
+                (match) => `<strong>${match}</strong>`
+            );
+            
+            item.innerHTML = highlightedText;
+            
+            // Handle click on suggestion
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                productSearchInput.value = product.title;
+                suggestionsContainer.innerHTML = '';
+                applySearchAndSort();
+            });
+
+            suggestionsContainer.appendChild(item);
+        });
+    };
+
+    // ----------------------------------------------------------------------
+    // 5. Theme Switching Logic
+    // ----------------------------------------------------------------------
+
+    const themeSwitcher = document.getElementById('theme-switcher');
+    const body = document.documentElement;
+
+    const toggleTheme = () => {
+        const currentTheme = body.getAttribute('data-bs-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        body.setAttribute('data-bs-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    };
+
+    const loadTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-bs-theme', savedTheme);
+        } else {
+            // Default to light if no preference is saved
+            body.setAttribute('data-bs-theme', 'light');
+        }
+    };
+
+    // ----------------------------------------------------------------------
+    // 6. Loader Logic
+    // ----------------------------------------------------------------------
+
+    const loaderWrapper = document.getElementById('loader-wrapper');
+    const mainContent = document.getElementById('main-content');
+
+    const hideLoader = () => {
+        loaderWrapper.style.opacity = '0';
+        // Allow the opacity transition to finish before setting display: none
+        setTimeout(() => {
+            loaderWrapper.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+            mainContent.style.display = 'block'; // Show content
+        }, 500); // Match transition duration
+    };
+
+    // ----------------------------------------------------------------------
+    // 7. Initialization and Event Listeners
+    // ----------------------------------------------------------------------
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Step 1: Extract data from the initially rendered cards
+        extractProducts();
+        
+        // Step 2: Load user's saved theme preference
+        loadTheme();
+
+        // Step 3: Set up event listeners
+        
+        // Theme Switcher
+        themeSwitcher.addEventListener('click', toggleTheme);
+
+        // Sort Dropdown
+        sortSelect.addEventListener('change', applySearchAndSort);
+
+        // Search Input - Live suggestions and filtering
+        productSearchInput.addEventListener('input', () => {
+            updateSuggestions();
+            // Optional: apply search on every input change for instant filtering
+            // applySearchAndSort(); 
+        });
+        
+        // Search Button
+        document.getElementById('productSearchButton').addEventListener('click', () => {
+             suggestionsContainer.innerHTML = ''; // Hide suggestions on explicit search
+             applySearchAndSort();
+        });
+        
+        // Allow pressing Enter to search
+        productSearchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                suggestionsContainer.innerHTML = '';
+                applySearchAndSort();
+            }
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!productSearchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                suggestionsContainer.innerHTML = '';
+            }
+        });
+
+        // Step 4: Hide the loader after initial setup
+        hideLoader();
+    });
+
+</script>
