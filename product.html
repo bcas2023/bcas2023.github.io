@@ -68,7 +68,7 @@
 
         .nav-link:hover::after,
         .nav-link.active::after {
-            width: calc(100% - 1rem); /* Match padding */
+            width: calc(100% - 1rem);
         }
 
         /* Loader Styles */
@@ -227,6 +227,19 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+
+        [data-bs-theme="dark"] footer {
+            background-color: #1c1c1c;
+            color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
@@ -370,6 +383,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- Card: Water Color Collection -->
+                <div class="col-md-6 col-lg-4 d-flex justify-content-center product-card-wrapper">
+                    <div class="card h-100" style="width: 18rem;">
+                        <img src="https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Petra_Artist_Water_Color_Set_6_ml_12_Sha-Petra-c833d-341252.png" class="card-img-top product-img" alt="Water Color Collection">
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title">Water Color Collection</h5>
+                            <a href="water_color.html" class="btn btn-primary mt-auto">See All Water Colors</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row justify-content-center g-4" id="searchResultsContainer" style="display: none;">
                 <!-- Search results will be dynamically inserted here -->
@@ -383,6 +406,10 @@
                 <p class="text-muted">Please check back later.</p>
             </div>
         </div>
+
+    <footer>
+        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved.</p>
+    </footer>
 
     <div class="theme-switch-wrapper">
         <button id="theme-switcher" aria-label="Toggle theme">
@@ -516,7 +543,16 @@
                 { name: 'A.R.I Black Pencil 2B', price: 'TK 6.00/pcs', stock: 'In Stock', image: 'https://via.placeholder.com/200x200.png?text=Image+Not+Available', page: 'pencil.html' },
                 { name: 'Classic Color Pencil 12 Pcs', price: 'TK 165.00/pcs', stock: 'Out of Stock', image: 'https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Classic_Color_Long_12_Colors-Faber_Castell-92ac1-225084.jpeg', page: 'pencil.html' },
                 { name: 'Deli Graphite Pencil 58100', price: 'TK 9.00/pcs', stock: 'In Stock', image: 'https://img.drz.lazcdn.com/g/kf/S5abfe1929d4f4108a8cda927da98eeb3Y.jpg_720x720q80.jpg', page: 'pencil.html' },
+                { name: 'Petra Pencil Water Color 12 Pcs', price: 'TK 198.00/pack', stock: 'In Stock', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGR2Aza3I9O0SQ4II3fv4uCUgQhZ2_p-kVUg&s', page: 'pencil.html' },
                 // ... Add all other products from all files here
+                // Water Colors
+                { name: 'Doms Water Color Pens (Big)', price: 'TK 10.00/pcs', stock: 'In Stock', image: 'https://via.placeholder.com/200x200.png?text=Image+Not+Available', page: 'water_color.html' },
+                { name: 'Kool Toolz Water Color (12 pcs)', price: 'TK 55.00/pack', stock: 'In Stock', image: 'https://via.placeholder.com/200x200.png?text=Image+Not+Available', page: 'water_color.html' },
+                { name: 'Doms Sketch Water Color', price: 'TK 60.00/pcs', stock: 'In Stock', image: 'https://static-01.daraz.com.bd/p/7a1246dd2880bd03ebc6a620ab89874a.jpg', page: 'water_color.html' },
+                { name: 'Doms Water Color (Small Pack)', price: 'TK 30.00/pack', stock: 'In Stock', image: 'https://img.drz.lazcdn.com/static/bd/p/6dd6d83418b6f8414dde4ee1ad17d6f6.jpg_720x720q80.jpg', page: 'water_color.html' },
+                { name: 'Water Color Pen KD 02010', price: 'TK 5.00/pcs', stock: 'In Stock', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOjZIKek1cQvJLmierZPo5L94xaSBc--jZ3A&s', page: 'water_color.html' },
+                { name: 'Artist Water Color (12 Shades)', price: 'TK 242.00/pack', stock: 'In Stock', image: 'https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Petra_Artist_Water_Color_Set_6_ml_12_Sha-Petra-c833d-341252.png', page: 'water_color.html' },
+                { name: 'Doms Water Color (Large Pack)', price: 'TK 45.00/pcs', stock: 'In Stock', image: 'https://img.drz.lazcdn.com/static/bd/p/6dd6d83418b6f8414dde4ee1ad17d6f6.jpg_720x720q80.jpg', page: 'water_color.html' }
             ];
             // TODO: For a comprehensive search on this page, consider consolidating all product data from other pages here.
 
