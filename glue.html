@@ -91,11 +91,11 @@
 
         .nav-link:hover::after {
             width: calc(100% - 1rem);
-            /* Match padding */
         }
 
         .nav-link.active::after {
             width: calc(100% - 1rem);
+            /* Match padding */
         }
 
         #announcement-bar {
@@ -300,6 +300,18 @@
             transform: translateX(30px);
             background-color: var(--bs-primary);
         }
+
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+        [data-bs-theme="dark"] footer {
+            background-color: #1c1c1c;
+            color: #e0e0e0;
+        }
     </style>
 </head>
 
@@ -328,7 +340,7 @@
                         <a class="nav-link" href="home.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="product.html">Products</a>
+                        <a class="nav-link active" href="product.html">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="updates.html">Updates</a>
@@ -537,6 +549,10 @@
         </div>
     </div>
 
+    <footer>
+        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved.</p>
+    </footer>
+
     <!-- Product Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -634,11 +650,12 @@
             "Erasers": ["Doms White Eraser", "TITI Jelly Eraser", "Non-Dust Eraser TR 5005", "Matador Woodmark Eraser", "Matador i-teen Eraser (Small)", "Petra Eraser Big (New, Black)", "Petra Eraser Big (Pink)", "Petra Eraser Small (White)", "Fresh Perfumed Eraser"],
             "Glues & Adhesives": ["Glue Gun Big", "Glue Gun Small", "Sinthia Super Glue", "Magnet Super Glue", "Glue Stick NC", "Glue Gun Stick Big", "Glue Gun Stick Small", "MS Dolphin Glue", "Fevicol Super Glue", "Mega Super Glue", "Fevicol Water Glue", "Petra Glue Stick 15 gram", "Petra Glue Stick 8 gram", "Petra Water Glue 50 ml"],
             "Pens": ["Fresh Allrounder", "Fresh Goodday", "Fresh Icon", "Fresh Spark", "Fresh Sprint", "Goodluck Anytime", "Goodluck Craze", "Goodluck Craze Blako", "Goodluck Express Ballpen", "Goodluck Fastgel Black", "Goodluck Fastgel Blue", "Goodluck Fastgel Green", "Goodluck Fastgel Red", "Goodluck Idea", "Goodluck Planet", "Goodluck Rose", "Goodluck School", "Goodluck Super Point", "Goodluck Topper", "Goodluck Topper Color", "Goodluck Ultima", "Matador Alltime", "Matador Hi School", "Matador i-teen Black Premium", "Matador Smoothy", "Matador Woodmark", "Matador Fiction Gel Pen", "Matador i-teen Gel Black", "Matador i-teen Gel Blue", "Matador i-teen Gel Green", "Matador i-teen Gel Red", "Matador Orbit Gel Pen", "Matador Claro Black", "Matador Glitter Pen", "Magic Pen"],
-            "Pencils & Colors": ["A.R.I Black Pencil 2B", "Classic Color Pencil 12 Pcs", "Deli Graphite Pencil 58100", "Doms Color Pencil Big", "Doms Color Pencil Half", "Doms Fusion Graphite Pencil", "Doms Super Dark Graphite Pencil", "Doms Super Dark Graphite Pencil (HB/2B)", "Doms X1 HB/2B Graphite Pencil", "Faber-Castell 2B Graphite Pencil", "Faber-Castell Red Matt HB Pencil", "Goal 4B Pencil", "Goal 6B Pencil", "Goal Black Matt 8B Pencil", "Goal Color Pencil Full 12 Pcs", "Goal Color Pencil Half", "Goldfaber 2B Pencil", "Goldfaber HB Pencil", "Good Luck Star Pencil", "Goodluck Color Pencil Big", "Goodluck Color Pencil Small", "Goodluck Color Pencil Tin 13 Pcs", "Goodluck Lily Pencil", "Goodluck Lotus Pencil", "Goodluck Radiant Pencil", "Graphite Pencil", "i-max Color Pencil", "Lead Pencil 7&7", "Matador Genius Pencil 2B", "Matador i-teen Color Pencil", "Matador i-teen Pencil", "Matador i-teen Rio Pencil 2B", "Matador Pluto Pencil 2B", "Matador Trio Pencil HB", "Mondete 2B Pencil", "Pencil Lead", "Petra Black Matt Pencil 2B", "Petra Classic Color Pencil 13 Pcs", "Petra Classic Color Pencil Big 24 Pcs", "Petra Classic Color Pencil Half Length", "Petra Classic Color Pencil Round Tin 13 Pcs", "Petra Classic Color Pencil Round Tin 24 Pcs", "Petra Mire Rubber Tip Pencil 2B", "Petra Orion Black Lead Pencil 2B", "Petra Pencil Water Color 24 Pcs", "Petra Phoenix Graphite Pencil 4B", "Petra Phoenix Graphite Pencil 6B", "Push Pencil Happy Bear", "USA Color Pencil Half 18 Pcs"],
+            "Pencils & Colors": ["A.R.I Black Pencil 2B", "Classic Color Pencil 12 Pcs", "Deli Graphite Pencil 58100", "Doms Color Pencil Big", "Doms Color Pencil Half", "Doms Fusion Graphite Pencil", "Doms Super Dark Graphite Pencil", "Doms Super Dark Graphite Pencil (HB/2B)", "Doms X1 HB/2B Graphite Pencil", "Faber-Castell 2B Graphite Pencil", "Faber-Castell Red Matt HB Pencil", "Goal 4B Pencil", "Goal 6B Pencil", "Goal Black Matt 8B Pencil", "Goal Color Pencil Full 12 Pcs", "Goal Color Pencil Half", "Goldfaber 2B Pencil", "Goldfaber HB Pencil", "Good Luck Star Pencil", "Goodluck Color Pencil Big", "Goodluck Color Pencil Small", "Goodluck Color Pencil Tin 13 Pcs", "Goodluck Lily Pencil", "Goodluck Lotus Pencil", "Goodluck Radiant Pencil", "Graphite Pencil", "i-max Color Pencil", "Lead Pencil 7&7", "Matador Genius Pencil 2B", "Matador i-teen Color Pencil", "Matador i-teen Pencil", "Matador i-teen Rio Pencil 2B", "Matador Pluto Pencil 2B", "Matador Trio Pencil HB", "Mondete 2B Pencil", "Pencil Lead", "Petra Black Matt Pencil 2B", "Petra Classic Color Pencil 13 Pcs", "Petra Classic Color Pencil Big 24 Pcs", "Petra Classic Color Pencil Half Length", "Petra Classic Color Pencil Round Tin 13 Pcs", "Petra Classic Color Pencil Round Tin 24 Pcs", "Petra Mire Rubber Tip Pencil 2B", "Petra Orion Black Lead Pencil 2B", "Petra Pencil Water Color 12 Pcs", "Petra Pencil Water Color 24 Pcs", "Petra Phoenix Graphite Pencil 4B", "Petra Phoenix Graphite Pencil 6B", "Push Pencil Happy Bear", "USA Color Pencil Half 18 Pcs"],
             "Sharpeners": ["Digni Sharpener (0001000)", "Bullet Sharpener", "Digni Sharpener", "Fresh Premium Sharpener", "Matador Smoothy Sharpener"],
             "Pencil Boxes": ["Pencil Box 6A", "Pencil Box VIP", "Matador Pencil Box Small", "Matador Woodmark Pencil Box", "Matador Double Decker Pencil Box", "Goodluck School Drama Carnival Pencil Box", "Goodluck Super Bard Pencil Box", "Goodluck Fish World Pencil Box (Too Small)", "Goodluck Peacock Pencil Box (Small)", "Goodluck Sea World Pencil Box", "Goodluck Micky Pencil Box", "Fresh Pencil Box"],
             "Tissues": ["Fresh Toilet Tissue", "Fresh Facial Tissue", "Goodluck Gold Toilet Tissue", "Bashundhara Pocket Tissue", "Bashundhara Perfumed Facial Tissue"],
-            "Paper Products": ["Bashundhara Demai Paper", "Bashundhara Legal Paper 80 GSM", "Bashundhara A4 Paper 100 GSM", "Bashundhara A4 Paper 80 GSM", "Bashundhara Legal Paper 65 GSM", "Bashundhara A4 Paper 65 GSM", "Paper Tech A4 65 GSM", "Bashundhara A3 Paper", "Bashundhara Demai 50 GSM", "Bashundhara A4 70 GSM", "Bashundhara A4 70 GSM (L)", "Happy Demai 21×34", "Fresh MS Demai 21×34", "Fresh A4 Paper 80 GSM", "Fresh Legal Paper 80 GSM", "Fresh A4 Paper 65 GSM", "Fresh Demai 10×16 (20 & 32 GSM)", "Fresh Demai 10.5×17 (21 & 34 GSM)"]
+            "Paper Products": ["Paper Tech A4 65 GSM", "Bashundhara Demai Paper 50 GSM", "Demai Paper 20\" x 32\"", "Bashundhara Demai Paper (10.5\"x17\" / 21\"x34\")", "Bashundhara Legal Paper 80 GSM", "Bashundhara A4 70 GSM", "Bashundhara A3 Paper", "Bashundhara A4 80 GSM", "Bashundhara Legal Paper 65 GSM", "Bashundhara A4 65 GSM", "Bashundhara A4 100 GSM", "Fresh A4 65 GSM", "Fresh A4 80 GSM", "Fresh Legal 80 GSM", "Fresh Demai 10.5\" x 17\""],
+            "Water Colors": ["Doms Water Color Pens (Big)", "Kool Toolz Water Color (12 pcs)", "Doms Sketch Water Color", "Doms Water Color (Small Pack)", "Water Color Pen KD 02010", "Artist Water Color (12 Shades)", "Doms Water Color (Large Pack)"]
         };
         const themeSwitcher = document.getElementById('theme-switcher');
         const htmlEl = document.documentElement;
