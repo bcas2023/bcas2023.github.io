@@ -68,7 +68,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.4s ease;
+            transition: background-color 0.3s ease;
         }
         .nav-link {
             transition: color 0.3s ease;
@@ -93,7 +93,7 @@
         }
         .nav-link:hover::after,
         .nav-link.active::after {
-            width: calc(100% - 1rem);
+            width: calc(100% - 1rem); /* Match padding */
         }
         #announcement-bar {
             background-color: var(--bs-primary);
@@ -119,6 +119,17 @@
             -webkit-backdrop-filter: blur(5px);
             border-color: rgba(var(--bs-body-color-rgb), 0.15);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+        [data-bs-theme="dark"] footer {
+            background-color: #1c1c1c;
+            color: #e0e0e0;
         }
         .theme-switch-wrapper {
             position: fixed;
@@ -230,6 +241,10 @@
             </div>
         </div>
     </main>
+
+    <footer>
+        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved.</p>
+    </footer>
 
     <div class="theme-switch-wrapper">
         <button id="theme-switcher" aria-label="Toggle theme">
