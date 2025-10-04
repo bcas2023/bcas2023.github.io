@@ -83,7 +83,7 @@
             align-items: center;
             background-color: var(--bs-body-bg);
             z-index: 1050;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.2s ease;
         }
 
         .loader-svg {
@@ -393,7 +393,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <!-- Card: Notebooks & Khata -->
+                <div class="col-md-6 col-lg-4 d-flex justify-content-center product-card-wrapper">
+                    <div class="card h-100" style="width: 18rem;">
+                        <img src="https://cdn.erincondren.com/ec-image-resources/1975753165_more%20designs2x.jpg" class="card-img-top product-img" alt="Notebooks and Khata Collection">
+                        <div class="card-body d-flex flex-column text-center">
+                            <h5 class="card-title">Notebook & Khata Collection</h5>
+                            <a href="notebook.html" class="btn btn-primary mt-auto">See All Notebooks</a>
+                        </div>
+                    </div>
+                </div>
             <div class="row justify-content-center g-4" id="searchResultsContainer" style="display: none;">
                 <!-- Search results will be dynamically inserted here -->
             </div>
@@ -472,7 +481,7 @@
             const loader = document.getElementById('loader-wrapper');
             if (loader) {
                 loader.style.opacity = '0';
-                setTimeout(() => { loader.style.display = 'none'; }, 500); // Wait for fade out transition to complete
+                setTimeout(() => { loader.style.display = 'none'; }, 200); // Wait for fade out transition to complete
             }
         });
 
@@ -552,7 +561,10 @@
                 { name: 'Doms Water Color (Small Pack)', price: 'TK 30.00/pack', stock: 'In Stock', image: 'https://img.drz.lazcdn.com/static/bd/p/6dd6d83418b6f8414dde4ee1ad17d6f6.jpg_720x720q80.jpg', page: 'water_color.html' },
                 { name: 'Water Color Pen KD 02010', price: 'TK 5.00/pcs', stock: 'In Stock', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOjZIKek1cQvJLmierZPo5L94xaSBc--jZ3A&s', page: 'water_color.html' },
                 { name: 'Artist Water Color (12 Shades)', price: 'TK 242.00/pack', stock: 'In Stock', image: 'https://ds.rokomari.store/rokomari110/ProductNew20190903/260X372/Petra_Artist_Water_Color_Set_6_ml_12_Sha-Petra-c833d-341252.png', page: 'water_color.html' },
-                { name: 'Doms Water Color (Large Pack)', price: 'TK 45.00/pcs', stock: 'In Stock', image: 'https://img.drz.lazcdn.com/static/bd/p/6dd6d83418b6f8414dde4ee1ad17d6f6.jpg_720x720q80.jpg', page: 'water_color.html' }
+                { name: 'Doms Water Color (Large Pack)', price: 'TK 45.00/pcs', stock: 'In Stock', image: 'https://img.drz.lazcdn.com/static/bd/p/6dd6d83418b6f8414dde4ee1ad17d6f6.jpg_720x720q80.jpg', page: 'water_color.html' },
+                // Notebooks & Khata
+                { name: '124 Page Happy Khata', price: 'TK 45.00/pcs', stock: 'In Stock', image: 'https://via.placeholder.com/200x200.png?text=Image+Not+Available', page: 'notebook.html' }
+                // ... Add all other products from all files here
             ];
             // TODO: For a comprehensive search on this page, consider consolidating all product data from other pages here.
 
