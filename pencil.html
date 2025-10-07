@@ -940,7 +940,7 @@
     </div>
 
     <footer>
-        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved. | version 1.4</p>
+        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved. | version 1.5</p>
     </footer>
 
     <!-- Product Modal -->
@@ -1388,22 +1388,23 @@
                     const whatsappNumber = '8801714637798'; // The shop's WhatsApp number
 
                     let message = `Hello, I would like to inquire about a product.\n\n`;
-                    message += `Product: ${productName}\n`;
-                    message += `Quantity: ${productQuantity} pcs\n`;
+                    message += `Product: ${productName}\n`; 
+                    message += `Quantity: ${productQuantity} pcs\n`; 
 
                     const additionalProducts = [];
                     const checkedItems = document.querySelectorAll('#moreProductsAccordion .form-check-input:checked, #moreProductsSearchResults .form-check-input:checked');
                     if (checkedItems.length > 0) {
-                        message += `\nAdditional Products:\n`;
+                        message += `\nAdditionally, I'm interested in:\n`;
                         checkedItems.forEach(item => {
                             const quantityInput = item.closest('.form-check').querySelector('input[type="number"]');
                             message += `- ${item.value} (Qty: ${quantityInput.value})\n`;
                         });
                     }
 
-                    message += `\nName: ${customerName}\n`;
-                    message += `Phone: ${customerPhone}\n`;
-                    message += `Location: ${customerLocation}`;
+                    message += `\nMy Details:\n`;
+                    message += `Name: ${customerName}\n`; 
+                    message += `Phone: ${customerPhone}\n`; 
+                    message += `Location: ${customerLocation}`; 
 
                     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                     window.open(whatsappUrl, '_blank');
