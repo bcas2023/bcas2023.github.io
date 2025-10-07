@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baroda Computers and Seals</title>
+    <title>Baroda Computers and Seals </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -12,7 +11,7 @@
             overflow: hidden; /* Hide scrollbar during loading */
             background-color: var(--bs-body-bg);
         }
-
+        /* Loader Styles */
         .loader-wrapper {
             position: fixed;
             top: 0;
@@ -104,6 +103,7 @@
         .nav-link.active::after {
             width: calc(100% - 1rem);
         }
+
         #announcement-bar {
             background-color: var(--bs-primary);
             color: var(--bs-light);
@@ -139,7 +139,7 @@
             background-color: rgba(var(--bs-primary-rgb), 0.15);
         }
 
-        /* Card Styles */
+        /* Card Styles (for future use) */
         .card {
             background-color: rgba(var(--bs-card-bg-rgb), 0.7);
             backdrop-filter: blur(5px);
@@ -158,8 +158,11 @@
             object-fit: contain;
             padding: 1rem;
         }
-        .in-stock { color: #198754; font-weight: 500; }
-        .out-of-stock { color: #dc3545; font-weight: 500; }
+        .in-stock {
+            color: var(--bs-success);
+            font-weight: 500;
+        }
+        .out-of-stock { color: var(--bs-danger); font-weight: 500; }
 
         /* Theme Switcher Styles */
         .theme-switch-wrapper {
@@ -268,11 +271,11 @@
         </div>
     </nav>
     <div id="announcement-bar">
-        <span>🌟<strong> Welcome</strong> to <strong>Baroda Computers and Seals</strong>! | Photo Paper page  🌟</span>
+        <span>🌟 <strong>Welcome</strong> to <strong>Baroda Computers and Seals</strong>! | Pencil Box page 🌟</span>
     </div>
 
     <div class="container py-5" style="display: none;" id="main-content">
-        <h2 class="text-center mb-4">Photo Paper Products</h2>
+        <h2 class="text-center mb-4">Pencil Box Products</h2>
         <div class="row align-items-center justify-content-center mb-5">
             <div class="col-auto">
                 <select class="form-select" id="sortSelect" aria-label="Sort by">
@@ -285,74 +288,140 @@
             </div>
             <div class="col-md-8 col-lg-6 position-relative">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="productSearchInput" placeholder="Search for photo paper..." aria-label="Search for photo paper" autocomplete="off">
+                    <input type="text" class="form-control" id="productSearchInput" placeholder="Search for pencil boxes..." aria-label="Search for pencil boxes" autocomplete="off">
                     <button class="btn btn-primary" type="button" id="productSearchButton">Search</button>
                 </div>
                 <div id="suggestions" class="list-group position-absolute w-100 mt-1" style="z-index: 1000;"></div>
             </div>
         </div>
-        <div class="row g-4" id="productCardsContainer">
-            <div class="col-md-6 col-lg-4 product-card">
+        <div class="row g-4" id="productCards">
+            <div class="col-md-4 product-card">
                 <div class="card h-100">
-                    <img src="https://rokbucket.rokomari.io/ProductNew20190903/260X372/HP_Advance_Photo_Print_Paper-PAPER_TREE-566bc-281371.jpg" class="card-img-top" alt="HP Photo Paper">
+                    <img src="https://via.placeholder.com/200x200.png?text=Image+Not+Available" class="card-img-top" alt="Pencil Box 6A">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">HP Photo Paper</h5>
-                        <p class="card-text"><strong>Price:</strong> TK 110.00/pack</p>
+                        <h5 class="card-title">Pencil Box 6A</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 140.00/pcs</p>
                         <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
                         <button class="btn btn-success mt-auto">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 product-card">
+            <div class="col-md-4 product-card">
                 <div class="card h-100">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREaWbLp2MYz_YE3DAmj7RUxN-Ghrvyn5iOTg&s" class="card-img-top" alt="Fujifilm Photo Paper 235 GSM">
+                    <img src="https://via.placeholder.com/200x200.png?text=Image+Not+Available" class="card-img-top" alt="Pencil Box VIP">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Fujifilm Photo Paper 235 GSM</h5>
-                        <p class="card-text"><strong>Price:</strong> TK 120.00/pack</p>
+                        <h5 class="card-title">Pencil Box VIP</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 330.00/pcs</p>
                         <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
                         <button class="btn btn-success mt-auto">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 product-card">
+            <div class="col-md-4 product-card">
                 <div class="card h-100">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREaWbLp2MYz_YE3DAmj7RUxN-Ghrvyn5iOTg&s" class="card-img-top" alt="Fujifilm Photo Paper 180 GSM">
+                    <img src="https://matador.com.bd/stationery/admin/uploads/product/matador-woodmark-pencil-box/16661562355hfbH.png" class="card-img-top" alt="Matador Pencil Box Small">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Fujifilm Photo Paper 180 GSM</h5>
-                        <p class="card-text"><strong>Price:</strong> TK 100.00/pack</p>
+                        <h5 class="card-title">Matador Pencil Box Small</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 35.00/pcs</p>
                         <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
                         <button class="btn btn-success mt-auto">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 product-card">
+            <div class="col-md-4 product-card">
                 <div class="card h-100">
-                    <img src="https://gomti.com.bd/upload/products/thumbnails/1840405315607987.jpg" class="card-img-top" alt="Bluesky Photo Paper">
+                    <img src="https://matador.com.bd/stationery/admin/uploads/product/matador-woodmark-pencil-box/16661562355hfbH.png" class="card-img-top" alt="Matador Woodmark Pencil Box">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Bluesky Photo Paper</h5>
-                        <p class="card-text"><strong>Price:</strong> TK 120.00/pack</p>
+                        <h5 class="card-title">Matador Woodmark Pencil Box</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 40.00/pcs</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="out-of-stock">Out of Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://matador.com.bd/stationery/admin/uploads/product/matador-double-decker-pencil-box/1666091897EcQCJ.jpg" class="card-img-top" alt="Matador Double Decker Pencil Box">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Matador Double Decker Pencil Box</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 58.00/pcs</p>
                         <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
                         <button class="btn btn-success mt-auto">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 product-card">
+            <div class="col-md-4 product-card">
                 <div class="card h-100">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJRYfdu_kIbRGt7InWax-Jtu0sfdi5WqxhpA&s" class="card-img-top" alt="Epson Photo Paper">
+                    <img src="https://static-01.daraz.com.bd/p/90c3fb9a4f7ed38b84d7851a485cbeda.jpg" class="card-img-top" alt="Goodluck School Drama Carnival Pencil Box">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Epson Photo Paper</h5>
-                        <p class="card-text"><strong>Price:</strong> TK 100.00/pack</p>
+                        <h5 class="card-title">Goodluck School Drama Carnival Pencil Box</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 55.00/pcs</p>
                         <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
                         <button class="btn btn-success mt-auto">Buy Now</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 product-card">
+            <div class="col-md-4 product-card">
                 <div class="card h-100">
-                    <img src="https://img.drz.lazcdn.com/static/bd/p/69c94753807364fbdd325a5243099519.jpg_720x720q80.jpg_.webp" class="card-img-top" alt="Fuji Photo Paper 180 GSM (Low Quality)">
+                    <img src="https://via.placeholder.com/200x200.png?text=Image+Not+Available" class="card-img-top" alt="Goodluck Super Bard Pencil Box">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Fuji Photo Paper 180 GSM (Low Quality)</h5>
-                        <p class="card-text"><strong>Price:</strong> TK 90.00/pack</p>
+                        <h5 class="card-title">Goodluck Super Bard Pencil Box</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 55.00/pcs</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="out-of-stock">Out of Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://rflbd.com/Application/storage/app/public/relativeContentPath/products/f693a60eb7aac9883d2f061eeec81ef64.jpg" class="card-img-top" alt="Goodluck Fish World Pencil Box (Too Small)">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Fish World Pencil Box (Too Small)</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 22.00/pcs</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0521654_good-luck-pencil-box-small.webp" class="card-img-top" alt="Goodluck Peacock Pencil Box (Small)">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Peacock Pencil Box (Small)</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 35.00/pcs</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="out-of-stock">Out of Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0489448_good-luck-pencil-box-sea-world-multi-colour_300.jpeg" class="card-img-top" alt="Goodluck Sea World Pencil Box">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Sea World Pencil Box</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 148.00/pcs</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://images.othoba.com/images/thumbs/0534823_good-luck-pencil-box-micky-multi-colour_400.jpeg" class="card-img-top" alt="Goodluck Micky Pencil Box">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Goodluck Micky Pencil Box</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 148.00/pcs</p>
+                        <p class="card-text"><strong>Stock Status:</strong> <span class="out-of-stock">Out of Stock</span></p>
+                        <button class="btn btn-success mt-auto">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 product-card">
+                <div class="card h-100">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9i2e1fPS-oiZCh_IKsxTN_rk3c9uKLpWYBg&s" class="card-img-top" alt="Fresh Pencil Box">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Fresh Pencil Box</h5>
+                        <p class="card-text"><strong>Price:</strong> TK 45.00/pcs</p>
                         <p class="card-text"><strong>Stock Status:</strong> <span class="in-stock">In Stock</span></p>
                         <button class="btn btn-success mt-auto">Buy Now</button>
                     </div>
@@ -369,6 +438,7 @@
         <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved. | version 1.5</p>
     </footer>
 
+    <!-- Product Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -395,12 +465,12 @@
             <form id="buyNowForm" class="mt-3">
                 <input type="hidden" id="formProductName" name="productName">
                 <div class="mb-3">
-                    <label for="formProductQuantity" class="form-label">Quantity (pack)</label>
+                    <label for="formProductQuantity" class="form-label">Quantity (pcs)</label>
                     <input type="number" class="form-control" id="formProductQuantity" value="1" min="1" required>
                 </div>
                 <div class="mb-3">
-                    <label for="formCustomerName" class="form-label">Your Name </label>
-                    <input type="text" class="form-control" id="formCustomerName" placeholder="Your name here" required>
+                    <label for="formCustomerName" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="formCustomerName" placeholder="your name" required>
                 </div>
                 <div class="mb-3">
                     <label for="formCustomerPhone" class="form-label">Phone Number</label>
@@ -410,7 +480,7 @@
                     <label for="formCustomerLocation" class="form-label">Your Location</label>
                     <input type="text" class="form-control" id="formCustomerLocation" placeholder="e.g., Singra, Natore" required>
                 </div>
-                <button type="button" class="btn btn-outline-secondary w-100 mb-3" id="addMoreProductsBtn" >
+                <button type="button" class="btn btn-outline-secondary w-100 mb-3" id="addMoreProductsBtn">
                     + Add More Products to Inquiry
                 </button>
                 <div id="moreProductsSection" class="mb-3" style="display: none;">
@@ -419,7 +489,9 @@
                         <input type="text" id="moreProductsSearch" class="form-control" placeholder="Search for other products..." aria-describedby="search-addon">
                     </div>
                     <div class="accordion" id="moreProductsAccordion" style="max-height: 250px; overflow-y: auto;"></div>
-                    <div id="moreProductsSearchResults" style="display: none; max-height: 250px; overflow-y: auto;"></div>
+                    <div id="moreProductsSearchResults" style="display: none; max-height: 250px; overflow-y: auto;">
+                        <!-- Flat search results will be generated here -->
+                    </div>
                 </div>
                 <p class="form-text text-danger small mb-3"><strong>Note: If you are out of Singra, Natore, you have to pay the courier service bill.</strong></p>
                 <button type="submit" class="btn btn-primary w-100">Send Inquiry</button>
@@ -434,15 +506,7 @@
             <span class="slider-thumb">
                 <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
                 <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -464,12 +528,12 @@
             "Tissues": ["Fresh Toilet Tissue", "Fresh Facial Tissue", "Goodluck Gold Toilet Tissue", "Bashundhara Pocket Tissue", "Bashundhara Perfumed Facial Tissue"],
             "Paper Products": ["Paper Tech A4 65 GSM", "Bashundhara Demai Paper 50 GSM", "Demai Paper 20\" x 32\"", "Bashundhara Demai Paper (10.5\"x17\" / 21\"x34\")", "Bashundhara Legal Paper 80 GSM", "Bashundhara A4 70 GSM", "Bashundhara A3 Paper", "Bashundhara A4 80 GSM", "Bashundhara Legal Paper 65 GSM", "Bashundhara A4 65 GSM", "Bashundhara A4 100 GSM", "Fresh A4 65 GSM", "Fresh A4 80 GSM", "Fresh Legal 80 GSM", "Fresh Demai 10.5\" x 17\""],
             "Photo Paper": ["HP Photo Paper", "Fujifilm Photo Paper 235 GSM", "Fujifilm Photo Paper 180 GSM", "Bluesky Photo Paper", "Epson Photo Paper", "Fuji Photo Paper 180 GSM (Low Quality)"],
-            "Brushes & Toothbrushes": ["Doms Brush Pens", "Artist Brush", "Kisan Toothbrush (604 N.O.)", "JADES Art Brush", "Sunny Toothbrush (TB-108)", "Matador Gum Care Toothbrush (TB-02)", "Kisan Kids Care Toothbrush (NO: 555)", "Kisan Toothbrush (TB-107)", "Kisan Toothbrush", "Sunny Toothbrush (TB-107)", "Sunny Toothbrush (TB-109)"],
             "Water Colors": ["Doms Water Color Pens (Big)", "Kool Toolz Water Color (12 pcs)", "Doms Sketch Water Color", "Doms Water Color (Small Pack)", "Water Color Pen KD 02010", "Artist Water Color (12 Shades)", "Doms Water Color (Large Pack)"],
             "Notebooks & Khata": ["124 Page Happy Khata", "84 Page Standard Happy Khata", "300 Pages Pocket Notebook", "No. 20 Register Khata", "No. 24 Register Khata", "Teacher Attendance Book 2D", "Teacher Attendance Book", "Raf Khata Happy", "ICT Practical Khata", "University 300 Demai Khata", "Happy 84 Page Math Khata", "Pencil Ring Khata", "Student Attendance Book 2D", "Student Attendance Book", "No. 4 Register Khata", "1D Register Book", "Graph Khata", "Bashundhara 84 Page New Khata", "MS Everyday 300 Page Ring Khata", "MS 300 Page Math Ring Khata", "MS 124 Page Math Khata", "MS 84 Page Bangla Khata", "No. 16 Register Book", "No. 10 Register Book", "Century ICT Practical Exercise Book", "Century Farming Practical Exercise Book", "Century Biology Exercise Book", "Century Laboratory Practical Exercise Book", "Handwriting Exercise Book (Small)", "10A Kids Khata (MS Product)", "104 Page Math Khata (MS Product)", "Bashundhara 84 Page Math Khata (MS Product)", "84 Page Math Khata (Khaki Orient MS Product)", "84 Page Math Khata (Everyday MS Product)", "Goodluck 120 Page Ring Khata (with margin)", "Goodluck 120 Page Ring Khata (without margin)", "Goodluck 300 Page Ring Khata (with margin)", "Goodluck 160 Page Ring Khata", "Goodluck 200 Page Khata (with margin)", "Goodluck 200 Page Ring Khata (without margin)", "Goodluck 300 Page Math Khata Big (with margin)", "Bashundhara 164 Page Ring Khata Big (with margin)", "Bashundhara 84 Page English Khata (with margin)", "Bashundhara 124 Page Math Khata Big (with margin)", "Bashundhara 124 Page Bangla Khata Big (with margin)", "Bashundhara 124 Page English Khata Big (with margin)", "Bashundhara 304 Page Math Khata Big (with margin)", "Bashundhara 204 Page Math Big Khata", "Bashundhara 204 Page Ring Math Khata (with margin)", "Bashundhara 84 Page Math Khata Big", "Bashundhara 84 Page Bangla Khata", "Bashundhara 124 Page Ring Khata", "Bashundhara 48 Page Drawing Khata", "Bashundhara 124 Page (with margin, kids)", "Bashundhara 124 Page English Khata (kids)", "Bashundhara 124 Page Bangla Khata (kids)", "Fresh 84 Page Math Khata Big (with margin)", "Fresh 204 Page Math Khata Big (with margin)", "Fresh 164 Page Math Khata", "Fresh 124 Page Math Khata (with margin)"]
         };
         const themeSwitcher = document.getElementById('theme-switcher');
         const htmlEl = document.documentElement;
+
         function applyTheme(theme) {
             htmlEl.setAttribute('data-bs-theme', theme);
         }
@@ -493,44 +557,31 @@
         });
 
         window.addEventListener('load', () => {
-            const mainContent = document.getElementById('main-content');
             const loader = document.getElementById('loader-wrapper');
+            const mainContent = document.getElementById('main-content');
             if (loader) {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    document.body.style.overflow = 'auto';
+                    document.body.style.overflow = 'auto'; // Restore scrollbar
                     if (mainContent) {
-                        mainContent.style.display = 'block';
+                        mainContent.style.display = 'block'; // Show main content
                     }
-                }, 200);
+                }, 200); // Wait for fade out transition to complete
             }
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Search & Sort Logic ---
             const searchInput = document.getElementById('productSearchInput');
             const searchButton = document.getElementById('productSearchButton');
             const suggestionsDiv = document.getElementById('suggestions');
             const noResultsMessage = document.getElementById('no-results-message');
-            const productCardsContainer = document.getElementById('productCardsContainer');
-            const productCards = Array.from(productCardsContainer.querySelectorAll('.product-card'));
-            const originalCardsOrder = [...productCards];
-            const allProductTitles = productCards.map(card => card.querySelector('.card-title').innerText);
+            const productCardsContainer = document.getElementById('productCards');
+            const productCards = productCardsContainer ? productCardsContainer.getElementsByClassName('product-card') : [];
+            const allProductTitles = Array.from(productCards).map(card => card.querySelector('.card-title').innerText);
             const sortSelect = document.getElementById('sortSelect');
-
-            // --- Handle Out of Stock Buttons ---
-            productCards.forEach(card => {
-                const stockStatusSpan = card.querySelector('.out-of-stock');
-                if (stockStatusSpan) {
-                    const buyButton = card.querySelector('.btn-success');
-                    if (buyButton) {
-                        buyButton.textContent = 'Out of Stock';
-                        buyButton.classList.remove('btn-success');
-                        buyButton.classList.add('btn-danger');
-                        buyButton.disabled = true;
-                    }
-                }
-            });
+            const originalCardsOrder = Array.from(productCards);
 
             const debounce = (func, delay) => {
                 let timeout;
@@ -542,40 +593,32 @@
             };
 
             const filterCards = (searchTerm) => {
-                let hasResults = false;
-                productCards.forEach(card => {
+                let visibleCount = 0;
+                Array.from(productCards).forEach(card => {
                     const title = card.querySelector('.card-title').innerText.toLowerCase();
                     if (title.includes(searchTerm)) {
-                        card.style.display = 'block';
-                        hasResults = true;
+                        card.style.display = '';
+                        visibleCount++;
                     } else {
                         card.style.display = 'none';
                     }
                 });
-                noResultsMessage.style.display = hasResults ? 'none' : 'block';
+
+                if (noResultsMessage) {
+                    const showNoResults = (searchTerm.length > 0 && visibleCount === 0);
+                    noResultsMessage.style.display = showNoResults ? 'block' : 'none';
+
+                    if (searchTerm === '') {
+                        noResultsMessage.style.display = 'none';
+                    }
+                }
             };
 
             const handleSearch = () => {
                 const searchTerm = searchInput.value.toLowerCase();
-                suggestionsDiv.innerHTML = '';
-
-                if (searchTerm.length > 0) {
-                    const filteredTitles = allProductTitles.filter(title => title.toLowerCase().includes(searchTerm));
-                    filteredTitles.slice(0, 5).forEach(title => {
-                        const suggestionItem = document.createElement('a');
-                        suggestionItem.classList.add('list-group-item', 'list-group-item-action', 'suggestion-item');
-                        suggestionItem.href = '#';
-                        suggestionItem.innerText = title;
-                        suggestionItem.onclick = (e) => {
-                            e.preventDefault();
-                            searchInput.value = title;
-                            suggestionsDiv.innerHTML = '';
-                            filterCards(title.toLowerCase());
-                        };
-                        suggestionsDiv.appendChild(suggestionItem);
-                    });
-                }
                 filterCards(searchTerm);
+                // Suggestions are not needed if there are no products, but the logic can remain for future use.
+                suggestionsDiv.innerHTML = '';
             };
 
             if (searchInput && searchButton) {
@@ -596,18 +639,21 @@
                 const priceP = Array.from(cardElement.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('price:'));
                 if (!priceP) return 0;
                 const priceMatch = priceP.innerText.match(/[\d\.]+/);
-                return priceMatch ? parseFloat(priceMatch[0]) : 0;
+                if (!priceMatch) return 0;
+                const price = parseFloat(priceMatch[0]);
+                return isNaN(price) ? 0 : price;
             };
 
             const getStockStatusFromCard = (cardElement) => {
                 const stockSpan = cardElement.querySelector('.in-stock, .out-of-stock');
-                return stockSpan && stockSpan.classList.contains('in-stock') ? 0 : 1;
+                if (!stockSpan) return 2;
+                return stockSpan.classList.contains('in-stock') ? 0 : 1;
             };
 
             if (sortSelect) {
                 sortSelect.addEventListener('change', () => {
                     const sortValue = sortSelect.value;
-                    const cardsArray = Array.from(productCardsContainer.children);
+                    const cardsArray = Array.from(productCards);
 
                     if (sortValue === 'default') {
                         originalCardsOrder.forEach(card => productCardsContainer.appendChild(card));
@@ -615,12 +661,12 @@
                     }
 
                     cardsArray.sort((a, b) => {
-                        if (sortValue.startsWith('price')) {
+                        if (sortValue === 'price-asc' || sortValue === 'price-desc') {
                             const priceA = getPriceFromCard(a);
                             const priceB = getPriceFromCard(b);
                             return sortValue === 'price-asc' ? priceA - priceB : priceB - priceA;
                         }
-                        if (sortValue.startsWith('stock')) {
+                        if (sortValue === 'stock-in-out' || sortValue === 'stock-out-in') {
                             const stockA = getStockStatusFromCard(a);
                             const stockB = getStockStatusFromCard(b);
                             return sortValue === 'stock-in-out' ? stockA - stockB : stockB - stockA;
@@ -632,7 +678,8 @@
                 });
             }
 
-             const productModalEl = document.getElementById('productModal');
+            // --- Product Modal Logic ---
+            const productModalEl = document.getElementById('productModal');
             if (productModalEl) {
                 const productModal = new bootstrap.Modal(productModalEl);
                 const modalImage = document.getElementById('modalProductImage');
@@ -649,34 +696,76 @@
                 const moreProductsSearchResults = document.getElementById('moreProductsSearchResults');
                 let moreProductsVisible = false;
 
-                productCardsContainer.addEventListener('click', (e) => {
-                    if (!e.target.matches('.btn-success')) return;
+                const cardsContainer = document.getElementById('productCards');
+                if (cardsContainer) {
+                    cardsContainer.addEventListener('click', (e) => {
+                        if (!e.target.matches('.btn-success')) return;
 
-                    const card = e.target.closest('.card');
-                    if (!card) return;
+                        const card = e.target.closest('.card');
+                        if (!card) return;
 
-                    e.preventDefault();
+                        e.preventDefault();
 
-                    const imageSrc = card.querySelector('.card-img-top').src;
-                    const title = card.querySelector('.card-title').innerText;
-                    const priceEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('price:'));
-                    const stockEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('stock status:'));
+                        const imageSrc = card.querySelector('.card-img-top').src;
+                        const title = card.querySelector('.card-title').innerText;
+                        const priceEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('price:'));
+                        const stockEl = Array.from(card.querySelectorAll('.card-text')).find(p => p.innerText.toLowerCase().startsWith('stock status:'));
+                        const price = priceEl ? priceEl.innerHTML : 'Price not available';
+                        const stock = stockEl ? stockEl.innerHTML : 'Stock status not available';
 
-                    modalImage.src = imageSrc;
-                    modalTitle.innerText = title;
-                    modalPrice.innerHTML = priceEl ? priceEl.innerHTML : 'Price not available';
-                    modalStock.innerHTML = stockEl ? stockEl.innerHTML : 'Stock status not available';
-                    if (formProductName) formProductName.value = title;
+                        modalImage.src = imageSrc;
+                        modalTitle.innerText = title;
+                        modalPrice.innerHTML = price;
+                        modalStock.innerHTML = stock;
+                        if (formProductName) formProductName.value = title;
 
-                    if (moreProductsSection) moreProductsSection.style.display = 'none';
-                    if (moreProductsAccordion) moreProductsAccordion.innerHTML = '';
-                    if (moreProductsSearchResults) moreProductsSearchResults.innerHTML = '';
-                    if (moreProductsSearch) moreProductsSearch.value = '';
-                    if (addMoreProductsBtn) addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
-                    moreProductsVisible = false;
+                        if (moreProductsSection) moreProductsSection.style.display = 'none';
+                        if (moreProductsAccordion) moreProductsAccordion.innerHTML = '';
+                        if (moreProductsSearchResults) moreProductsSearchResults.innerHTML = '';
+                        if (moreProductsSearch) moreProductsSearch.value = '';
+                        if (addMoreProductsBtn) addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
+                        moreProductsVisible = false;
 
-                    productModal.show();
-                });
+                        productModal.show();
+                    });
+                }
+
+                if (buyNowForm) {
+                    buyNowForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const productName = document.getElementById('formProductName').value;
+                        const productQuantity = document.getElementById('formProductQuantity').value;
+                        const customerName = document.getElementById('formCustomerName').value;
+                        const customerPhone = document.getElementById('formCustomerPhone').value;
+                        const customerLocation = document.getElementById('formCustomerLocation').value;
+                        const whatsappNumber = '8801714637798';
+
+                        let message = `Hello, I would like to inquire about a product.\n\n`;
+                        message += `Product: ${productName}\n`; 
+                        message += `Quantity: ${productQuantity} pcs\n`; 
+
+                        const checkedItems = document.querySelectorAll('#moreProductsAccordion .form-check-input:checked, #moreProductsSearchResults .form-check-input:checked');
+                        if (checkedItems.length > 0) {
+                            message += `\nAdditionally, I'm interested in:\n`;
+                            checkedItems.forEach(item => {
+                                const quantityInput = item.closest('.form-check').querySelector('input[type="number"]');
+                                message += `- ${item.value} (Qty: ${quantityInput.value})\n`;
+                            });
+                        }
+
+                        message += `\nMy Details:\n`;
+                        message += `Name: ${customerName}\n`; 
+                        message += `Phone: ${customerPhone}\n`; 
+                        message += `Location: ${customerLocation}`; 
+
+                        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+                        window.open(whatsappUrl, '_blank');
+
+                        this.reset();
+                        productModal.hide();
+                    });
+                }
 
                 function populateMoreProductsAccordion() {
                     const currentProduct = document.getElementById('modalProductTitle').innerText;
@@ -780,46 +869,22 @@
                         }
                     });
                 }
-
-                if (buyNowForm) {
-                    buyNowForm.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        const productName = document.getElementById('formProductName').value;
-                        const productQuantity = document.getElementById('formProductQuantity').value;
-                        const customerName = document.getElementById('formCustomerName').value;
-                        const customerPhone = document.getElementById('formCustomerPhone').value;
-                        const customerLocation = document.getElementById('formCustomerLocation').value;
-                        const whatsappNumber = '8801714637798';
-
-                        let message = `Hello, I would like to inquire about a product.\n\n` +
-                                      `Product: ${productName}\n` + 
-                                      `Quantity: ${productQuantity} pack\n`; 
-
-                        const additionalProducts = [];
-                        const checkedItems = document.querySelectorAll('#moreProductsAccordion .form-check-input:checked, #moreProductsSearchResults .form-check-input:checked');
-                        if (checkedItems.length > 0) {
-                            message += `\nAdditionally, I'm interested in:\n`;
-                            checkedItems.forEach(item => { 
-                                const quantityInput = item.closest('.form-check').querySelector('input[type="number"]'); 
-                                message += `- ${item.value} (Qty: ${quantityInput.value})\n`; 
-                            }); 
-                        }
-
-                        message += `\nMy Details:\n` +
-                                   `Name: ${customerName}\n` + 
-                                   `Phone: ${customerPhone}\n` + 
-                                   `Location: ${customerLocation}`; 
-
-                        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-                        window.open(whatsappUrl, '_blank');
-
-                        this.reset();
-                        productModal.hide();
-                    });
-                }
             }
+
+            // --- Handle Out of Stock Buttons ---
+            document.querySelectorAll('.product-card').forEach(card => {
+                const stockStatusSpan = card.querySelector('.out-of-stock');
+                if (stockStatusSpan) {
+                    const buyButton = card.querySelector('.btn-success');
+                    if (buyButton) {
+                        buyButton.textContent = 'Out of Stock';
+                        buyButton.classList.remove('btn-success');
+                        buyButton.classList.add('btn-danger');
+                        buyButton.disabled = true;
+                    }
+                }
+            });
         });
     </script>
 </body>
-
 </html>
