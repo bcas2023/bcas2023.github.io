@@ -353,7 +353,7 @@
     </div>
 
     <footer>
-        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved. | version 1.4</p>
+        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved. | version 1.5</p>
     </footer>
 
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
@@ -778,22 +778,23 @@
                         const whatsappNumber = '8801714637798';
 
                         let message = `Hello, I would like to inquire about a product.\n\n` +
-                                      `Product: ${productName}\n` +
-                                      `Quantity: ${productQuantity} pcs\n`;
+                                      `Product: ${productName}\n` + 
+                                      `Quantity: ${productQuantity} pcs\n`; 
 
                         const additionalProducts = [];
                         const checkedItems = document.querySelectorAll('#moreProductsAccordion .form-check-input:checked, #moreProductsSearchResults .form-check-input:checked');
                         if (checkedItems.length > 0) {
-                            checkedItems.forEach(item => {
-                                const quantityInput = item.closest('.form-check').querySelector('input[type="number"]');
-                                additionalProducts.push(`${item.value} (Qty: ${quantityInput.value})`);
-                            });
-                            message += `\n\nAdditional Products:\n- ${additionalProducts.join('\n- ')}`;
+                            message += `\nAdditionally, I'm interested in:\n`;
+                            checkedItems.forEach(item => { 
+                                const quantityInput = item.closest('.form-check').querySelector('input[type="number"]'); 
+                                message += `- ${item.value} (Qty: ${quantityInput.value})\n`; 
+                            }); 
                         }
 
-                        message += `\n\nName: ${customerName}\n` +
-                                   `Phone: ${customerPhone}\n` +
-                                   `Location: ${customerLocation}`;
+                        message += `\nMy Details:\n` +
+                                   `Name: ${customerName}\n` + 
+                                   `Phone: ${customerPhone}\n` + 
+                                   `Location: ${customerLocation}`; 
 
                         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                         window.open(whatsappUrl, '_blank');
