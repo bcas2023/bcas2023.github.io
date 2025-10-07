@@ -36,13 +36,13 @@
         }
 
         .in-stock {
-            color: #3cff00;
+            color: var(--bs-success);
             /* Bootstrap's success green */
             font-weight: 500;
         }
 
         .out-of-stock {
-            color: #ff0000;
+            color: var(--bs-danger);
             /* Bootstrap's danger red */
             font-weight: 500;
         }
@@ -550,7 +550,7 @@
     </div>
 
     <footer>
-        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved. | version 1.4</p>
+        <p> © 2023 Baroda Computers and Seals Singra Natore. All rights reserved. | version 1.5</p>
     </footer>
 
     <!-- Product Modal -->
@@ -570,9 +570,15 @@
                         <p id="modalProductStock"></p>
                     </div>
                     <hr>
-                    <p class="text-center small">To inquire about this product, please fill out the form below or call
-                        us at <a href="tel:+8801714637798">+8801714637798</a>.</p>
-                    <form id="buyNowForm" class="mt-3">
+                    <div class="alert alert-info small">
+                        <h6 class="alert-heading">How to Inquire:</h6>
+                        <ol class="mb-0 ps-3">
+                            <li>Fill in the quantity and your details below.</li>
+                            <li>Click "Send Inquiry" to open WhatsApp with a pre-filled message.</li>
+                            <li>Send the message in WhatsApp to place your inquiry.</li>
+                        </ol>
+                    </div>
+                    <form id="buyNowForm" class="mt-3"> 
                         <input type="hidden" id="formProductName" name="productName">
                         <div class="mb-3">
                             <label for="formProductQuantity" class="form-label">Quantity (pcs)</label>
@@ -595,7 +601,7 @@
                                 placeholder="e.g., Singra, Natore" required>
                         </div>
                         <button type="button" class="btn btn-outline-secondary w-100 mb-3" id="addMoreProductsBtn">
-                            + Add More Products
+                            + Add More Products to Inquiry
                         </button>
                         <div id="moreProductsSection" class="mb-3" style="display: none;">
                             <div class="input-group mb-2">
@@ -612,8 +618,8 @@
                                 <!-- Flat search results will be generated here -->
                             </div>
                         </div>
-                        <p class="form-text text-danger small mb-3">Note: If you are out of Singra, Natore, you have to
-                            pay the courier service bill.</p>
+                        <p class="form-text text-danger small mb-3"><strong>Note: If you are out of Singra, Natore, you have to
+                            pay the courier service bill.</strong></p>
                         <button type="submit" class="btn btn-primary w-100">Send Inquiry</button>
                     </form>
                 </div>
@@ -975,7 +981,7 @@
                             addMoreProductsBtn.textContent = '- Hide Extra Products';
                         } else {
                             moreProductsSection.style.display = 'none';
-                            addMoreProductsBtn.textContent = '+ Add More Products';
+                            addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
                         }
                     });
                 }
@@ -1015,7 +1021,7 @@
                         if (moreProductsAccordion) moreProductsAccordion.innerHTML = '';
                         if (moreProductsSearchResults) moreProductsSearchResults.innerHTML = '';
                         if (moreProductsSearch) moreProductsSearch.value = '';
-                        if (addMoreProductsBtn) addMoreProductsBtn.textContent = '+ Add More Products';
+                        if (addMoreProductsBtn) addMoreProductsBtn.textContent = '+ Add More Products to Inquiry';
                         moreProductsVisible = false;
 
                         productModal.show();
@@ -1038,20 +1044,19 @@
 
                         const additionalProducts = [];
                         const checkedItems = document.querySelectorAll('#moreProductsAccordion .form-check-input:checked, #moreProductsSearchResults .form-check-input:checked');
-                        if (checkedItems.length > 0) {
+                        if (checkedItems.length > 0) { 
+                            message += `\nAdditionally, I'm interested in:\n`;
                             checkedItems.forEach(item => {
                                 const quantityInput = item.closest('.form-check').querySelector('input[type="number"]');
-                                additionalProducts.push(`${item.value} (Qty: ${quantityInput.value})`);
+                                message += `- ${item.value} (Qty: ${quantityInput.value})\n`;
                             });
                         }
 
-                        message += `\nName: ${customerName}\n`;
+                        message += `\nMy Details:\n`;
+                        message += `Name: ${customerName}\n`;
                         message += `Phone: ${customerPhone}\n`;
                         message += `Location: ${customerLocation}`;
 
-                        if (additionalProducts.length > 0) {
-                            message += `\n\nAdditional Products:\n- ${additionalProducts.join('\n- ')}`;
-                        }
                         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                         window.open(whatsappUrl, '_blank');
                         this.reset();
