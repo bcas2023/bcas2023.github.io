@@ -8,7 +8,7 @@
 <h3>Thank You</h3>
 
    -----
- ## &copy; Baroda Computers and Seals | All rights reaceved by the gov of <strong>Bangladesh</strong>
+ ##  &copy; Baroda Computers and Seals | All rights reaceved by the gov of <strong>Bangladesh</strong>
 
 # created by a Boy of BAnglaDeSh . 
 
