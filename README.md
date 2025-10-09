@@ -8,6 +8,6 @@
 <h3>Thank You</h3>
 
    -----
- ## &copy; <strong> $${\color{green}\text{Baroda Computers and Seals}}$$ </strong>| All rights reaceved by the gov of <strong>Bangladesh</strong>
- # created by a Boy of BAnglaDeSh . 
+ ## &copy; Baroda Computers and Seals | All rights reaceved by the gov of <strong>Bangladesh</strong>
+   # created by a Boy of BAnglaDeSh . 
 
