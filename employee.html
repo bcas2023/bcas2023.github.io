@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bs-primary-rgb: 99, 102, 241;
+            --bs-primary: #6366f1;
+            --bs-body-font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--bs-body-font-family);
+            background-color: var(--bs-tertiary-bg);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100%;
+            padding-top: 56px;
+            background-color: var(--bs-body-bg);
+            border-right: 1px solid var(--bs-border-color);
+            z-index: 1020;
+            overflow-y: auto;
+        }
+
+        .sidebar .nav-link {
+            color: var(--bs-body-color);
+            padding: .75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar .nav-link:hover {
+            background-color: var(--bs-tertiary-bg);
+        }
+
+        .sidebar .nav-link.active {
+            color: var(--bs-primary);
+            font-weight: 600;
+            border-left-color: var(--bs-primary);
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding-top: 72px;
+            padding-bottom: 40px;
+        }
+
+        .permission-checkbox-group {
+            background-color: var(--bs-tertiary-bg);
+            border-radius: .5rem;
+        }
+
+        /* Theme Switcher */
+        .theme-switch-wrapper {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 1001;
+        }
+
+        #theme-switcher {
+            background: none;
+            border: 1px solid var(--bs-border-color-translucent);
+            padding: 0;
+            cursor: pointer;
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background-color: var(--bs-tertiary-bg);
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .slider-thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        // Redirect to sign-in if not authenticated
+        if (sessionStorage.getItem('isAuthenticated') !== 'true') {
+            window.location.href = 'signin.html';
+        }
+    </script>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="dashboard.html" style="margin-left: 240px;">Baroda Computure And Sales</a>
+            <div>
+                <a href="pos.html" class="btn btn-warning me-2" title="Go to Point of Sale">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 4 0h3.5a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z" />
+                    </svg>
+                    POS
+                </a>
+                <span id="welcomeMessage" class="navbar-text text-white me-3"></span>
+                <button id="logoutButton" class="btn btn-danger" title="Logout from the application">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="sidebar">
+        <div class="p-3 text-center border-bottom">
+            <h5 class="mb-0">Navigation</h5>
+        </div>
+        <ul class="nav flex-column pt-2">
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#productSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    aria-controls="productSubmenu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <path d="M16 13H8"></path>
+                        <path d="M16 17H8"></path>
+                        <path d="M10 9H8"></path>
+                    </svg>
+                    Products
+                </a>
+                <div class="collapse" id="productSubmenu">
+                    <ul class="nav flex-column ms-4">
+                        <li class="nav-item"><a class="nav-link sub-link" href="web.html">All Products</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="add-product.html">Add Product</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="add-product-history.html">Add Product
+                                History</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#purchaseSubmenu" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="purchaseSubmenu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 10V7a5 5 0 0 1 10 0v3"></path>
+                        <path
+                            d="M17 10h-1a4 4 0 0 0-8 0H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Z">
+                        </path>
+                    </svg>
+                    Purchase
+                </a>
+                <div class="collapse" id="purchaseSubmenu">
+                    <ul class="nav flex-column ms-4">
+                        <li class="nav-item"><a class="nav-link sub-link" href="purchase.html">Add purchase</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="purchase-history.html">Purchase
+                                History</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="purchase-return.html">Purchase
+                                Return</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="purchase-return-history.html">Purchase
+                                Return History</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#salesSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    aria-controls="salesSubmenu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        <path d="M12 20v-8"></path>
+                        <path d="M12 4v8"></path>
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                    Sales
+                </a>
+                <div class="collapse" id="salesSubmenu">
+                    <ul class="nav flex-column ms-4">
+                        <li class="nav-item"><a class="nav-link sub-link" href="sales.html">Sales Record</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="add-sale.html">Add sale</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="sell-return.html">Sell Return</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link sub-link" href="sell-return-history.html">Sell Return History</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#peopleSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    aria-controls="peopleSubmenu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-users">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    People
+                </a>
+                <div class="collapse" id="peopleSubmenu">
+                    <ul class="nav flex-column ms-4">
+                        <li class="nav-item"><a class="nav-link sub-link" href="customer.html">Customer List</a></li>
+                        <li class="nav-item"><a class="nav-link sub-link" href="supplier.html">Supplier List</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="employee.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Employee
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="account.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Account
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="container-fluid px-4">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Employee Management</h1>
+                <button id="addEmployeeBtn" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#employeeModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-lg me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                    </svg>
+                    Add Employee
+                </button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="row mb-4">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-search" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.098zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </span>
+                        <input type="search" id="employeeSearchInput" class="form-control"
+                            placeholder="Search by name or code...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">Employee Accounts</h6>
+                </div>
+                <div class="card-body p-0">
+                    <div id="employeeListContainer">
+                        <!-- Employee list will be rendered here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Employee Details Modal -->
+    <div class="modal fade" id="employeeDetailsModal" tabindex="-1" aria-labelledby="employeeDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="employeeDetailsModalLabel">Employee Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="employeeDetailsContainer">
+                        <!-- Details will be injected here by JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Employee Modal -->
+    <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="employeeModalLabel">Add New Employee</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="employeeForm">
+                        <input type="hidden" id="employeeUsername" readonly>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="employeeName" class="form-label">Employee Name</label>
+                                <input type="text" class="form-control" id="employeeName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="employeeCode" class="form-label">Code</label>
+                                <input type="text" class="form-control" id="employeeCode" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeePassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="employeePassword" required>
+                            <div class="form-text" id="passwordHelpBlock">Leave blank to keep the current password when
+                                editing.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="employeeMobile" class="form-label">Mobile Number</label>
+                                <input type="tel" class="form-control" id="employeeMobile">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="employeeEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="employeeEmail">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employeeLocation" class="form-label">Home Location</label>
+                            <input type="text" class="form-control" id="employeeLocation">
+                        </div>
+                        <div class="mb-3" id="permissionsContainer">
+                            <label class="form-label">Permissions</label>
+                            <div class="row">
+                                <!-- Checkboxes will be generated here -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="employeeForm" class="btn btn-primary">Save Employee</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal (for sidebar consistency) -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addProductModalLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Simplified: In a real app, this would be a shared component -->
+                    <p>Add product form would be here...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switch-wrapper">
+        <button id="theme-switcher" aria-label="Toggle theme">
+            <span class="slider-thumb bg-secondary">
+                <svg class="sun" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    fill="currentColor" viewBox="0 0 16 16">
+                    <path
+                        d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+                </svg>
+                <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+                </svg>
+            </span>
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- DOM Element Selectors ---
+            const logoutButton = document.getElementById('logoutButton');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const employeeListContainer = document.getElementById('employeeListContainer');
+            const addEmployeeBtn = document.getElementById('addEmployeeBtn');
+            const employeeModalEl = document.getElementById('employeeModal');
+            const employeeModal = new bootstrap.Modal(employeeModalEl);
+            const employeeForm = document.getElementById('employeeForm');
+            const employeeModalLabel = document.getElementById('employeeModalLabel');
+            const searchInput = document.getElementById('employeeSearchInput');
+            const permissionsContainer = document.querySelector('#employeeModal #permissionsContainer .row');
+
+            // --- Permission Definitions ---
+            const ALL_PERMISSIONS = {
+                'dashboard': 'Dashboard', 'products': 'Products', 'purchase': 'Purchase',
+                'sales': 'Sales', 'pos': 'POS Access', 'people': 'People', 'edit': 'Edit Data', 'clear_history': 'Clear History', 'add_product': 'Add Product', 'add_sale': 'Add Sale'
+            };
+
+            // --- User & Auth Functions ---
+            function getUsers() {
+                const usersJson = localStorage.getItem('scannerUsers');
+                return usersJson ? JSON.parse(usersJson) : [];
+            }
+
+            function saveUsers(users) {
+                localStorage.setItem('scannerUsers', JSON.stringify(users));
+            }
+
+            function hasPermission(user, permission) {
+                if (!user) return false;
+                if (user.role === 'admin') return true;
+                return user.permissions && user.permissions.includes(permission);
+            }
+
+            // --- Initialize User Data ---
+            let validUsers = getUsers();
+            const loggedInUserName = sessionStorage.getItem('loggedInUser');
+            const currentUser = validUsers.find(u => u.name === loggedInUserName);
+
+            // --- Page-Level Access Control ---
+            if (!hasPermission(currentUser, 'manage_employees')) {
+                alert('Access Denied. You do not have permission to manage employees.');
+                window.location.href = 'dashboard.html';
+                return; // Stop script execution
+            }
+
+            // --- Employee Management UI & Logic ---
+            function renderEmployees(employeesToRender) {
+                employeeListContainer.innerHTML = '';
+                if (employeesToRender.length === 0) {
+                    employeeListContainer.innerHTML = '<p class="text-center text-muted p-4">No employee accounts found.</p>';
+                    return;
+                }
+                const list = document.createElement('ul');
+                list.className = 'list-group list-group-flush';
+                employeesToRender.forEach(employee => {
+                    const permissionsList = employee.permissions?.map(p => `<span class="badge bg-secondary-subtle text-secondary-emphasis me-1">${ALL_PERMISSIONS[p] || p}</span>`).join('') || '<span class="text-muted small">No permissions</span>';
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item p-3';
+                    listItem.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">${employee.name}</h6>
+                                <small class="text-muted">Code: ${employee.code}</small>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-success details-employee-btn" data-username="${employee.name}" title="View Details">Details</button>
+                                <button class="btn btn-sm btn-warning edit-employee-btn" data-username="${employee.name}" title="Edit Employee">Edit</button>
+                                <button class="btn btn-sm btn-danger delete-employee-btn" data-username="${employee.name}" title="Delete Employee">Delete</button>
+                            </div>
+                        </div>
+                        <div class="mt-2 permission-checkbox-group p-2">
+                            ${permissionsList}
+                        </div>`;
+                    list.appendChild(listItem);
+                });
+                employeeListContainer.appendChild(list);
+            }
+
+            function openEmployeeModal(userToEdit = null) {
+                employeeForm.reset();
+                document.getElementById('employeeUsername').value = userToEdit ? userToEdit.name : '';
+
+                if (userToEdit) {
+                    employeeModalLabel.textContent = 'Edit Employee';
+                    document.getElementById('employeeName').value = userToEdit.name;
+                    document.getElementById('employeeName').readOnly = true; // Prevent changing name
+                    document.getElementById('employeeCode').value = userToEdit.code;
+                    document.getElementById('passwordHelpBlock').style.display = 'block';
+                    document.getElementById('employeeMobile').value = userToEdit.mobile || '';
+                    document.getElementById('employeeEmail').value = userToEdit.email || '';
+                    document.getElementById('employeeLocation').value = userToEdit.location || '';
+                    document.getElementById('employeePassword').required = false;
+                    // Check the user's permissions
+                    permissionsContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                        cb.checked = userToEdit.permissions?.includes(cb.value);
+                    });
+                } else {
+                    employeeModalLabel.textContent = 'Add New Employee';
+                    document.getElementById('employeeName').readOnly = false;
+                    document.getElementById('passwordHelpBlock').style.display = 'none';
+                    document.getElementById('employeePassword').required = true;
+                }
+                employeeModal.show();
+            }
+
+            function showEmployeeDetails(username) {
+                const employee = validUsers.find(u => u.name === username);
+                if (!employee) return;
+
+                const permissionsList = employee.permissions?.map(p => `<span class="badge bg-primary-subtle text-primary-emphasis me-1">${ALL_PERMISSIONS[p] || p}</span>`).join('') || '<span class="text-muted">No specific permissions</span>';
+
+                const detailsHtml = `
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" fill="currentColor" class="bi bi-person-circle text-muted" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                        </div>
+                        <div class="col-md-8">
+                            <h3>${employee.name}</h3>
+                            <p class="fs-5 text-muted">Employee Code: ${employee.code}</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between"><span>Mobile:</span> <strong>${employee.mobile || 'N/A'}</strong></li>
+                                <li class="list-group-item d-flex justify-content-between"><span>Email:</span> <strong>${employee.email || 'N/A'}</strong></li>
+                                <li class="list-group-item d-flex justify-content-between"><span>Location:</span> <strong>${employee.location || 'N/A'}</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="mt-4">Assigned Permissions</h5>
+                    <div class="p-3 rounded bg-light-subtle">
+                        ${permissionsList}
+                    </div>
+                `;
+                document.getElementById('employeeDetailsContainer').innerHTML = detailsHtml;
+                new bootstrap.Modal(document.getElementById('employeeDetailsModal')).show();
+            }
+
+            employeeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const usernameToEdit = document.getElementById('employeeUsername').value;
+                const name = document.getElementById('employeeName').value.trim();
+                const password = document.getElementById('employeePassword').value;
+                const code = document.getElementById('employeeCode').value.trim();
+                const mobile = document.getElementById('employeeMobile').value.trim();
+                const email = document.getElementById('employeeEmail').value.trim();
+                const location = document.getElementById('employeeLocation').value.trim();
+                const permissions = Array.from(permissionsContainer.querySelectorAll('input:checked')).map(cb => cb.value);
+                const role = permissions.includes('manage_employees') ? 'admin' : 'employee';
+
+                if (usernameToEdit) { // Editing existing user
+                    const userIndex = validUsers.findIndex(u => u.name === usernameToEdit);
+                    if (userIndex > -1) {
+                        validUsers[userIndex].code = code;
+                        validUsers[userIndex].permissions = permissions;
+                        validUsers[userIndex].role = role;
+                        validUsers[userIndex].mobile = mobile;
+                        validUsers[userIndex].email = email;
+                        validUsers[userIndex].location = location;
+                        if (password) { // Only update password if a new one is provided
+                            validUsers[userIndex].password = password;
+                        }
+                        alert(`Employee "${name}" updated.`);
+                    }
+                } else { // Adding new user
+                    if (validUsers.some(u => u.name.toLowerCase() === name.toLowerCase())) {
+                        alert('An employee with this name already exists.');
+                        return;
+                    }
+                    validUsers.push({ name, password, code, role, permissions, mobile, email, location });
+                    alert(`Employee account for "${name}" created.`);
+                }
+
+                saveUsers(validUsers);
+                filterAndRenderEmployees();
+                employeeModal.hide();
+            });
+
+            employeeListContainer.addEventListener('click', (e) => {
+                const target = e.target.closest('.details-employee-btn, .edit-employee-btn, .delete-employee-btn');
+                if (!target) return;
+
+                const username = target.dataset.username;
+
+                if (target.classList.contains('details-employee-btn')) {
+                    showEmployeeDetails(username);
+                } else if (target.classList.contains('edit-employee-btn')) {
+                    const user = validUsers.find(u => u.name === username);
+                    if (user) openEmployeeModal(user);
+                } else if (target.classList.contains('delete-employee-btn')) {
+                    if (confirm(`Are you sure you want to delete the account for "${username}"?`)) {
+                        validUsers = validUsers.filter(u => u.name !== username);
+                        saveUsers(validUsers);
+                        filterAndRenderEmployees();
+                        alert('Employee deleted.');
+                    }
+                }
+            });
+
+            function filterAndRenderEmployees() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const employees = validUsers.filter(u => u.role !== 'admin');
+                const filtered = employees.filter(emp =>
+                    emp.name.toLowerCase().includes(searchTerm) ||
+                    emp.code.toLowerCase().includes(searchTerm)
+                );
+                renderEmployees(filtered);
+            }
+
+            addEmployeeBtn.addEventListener('click', () => openEmployeeModal());
+
+            // --- Shared Page Logic (Auth, Theme) ---
+            function setupSharedLogic() {
+                if (loggedInUserName) {
+                    welcomeMessage.textContent = `Welcome, ${loggedInUserName.split(' ')[0]}`;
+                }
+
+                logoutButton.addEventListener('click', () => {
+                    sessionStorage.clear();
+                    window.location.href = 'signin.html';
+                });
+
+                // Populate permission checkboxes in the modal
+                permissionsContainer.innerHTML = Object.keys(ALL_PERMISSIONS).map(permKey => `
+                    <div class="col-md-4"><div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" value="${permKey}" id="perm_${permKey}">
+                        <label class="form-check-label" for="perm_${permKey}">${ALL_PERMISSIONS[permKey]}</label>
+                    </div></div>
+                `).join('');
+
+                // Theme Switcher
+                const themeSwitcher = document.getElementById('theme-switcher');
+                const htmlEl = document.documentElement;
+                function applyTheme(theme) { htmlEl.setAttribute('data-bs-theme', theme); }
+                function updateSwitcherUI(theme) {
+                    const thumb = themeSwitcher.querySelector('.slider-thumb');
+                    const sunIcon = themeSwitcher.querySelector('.sun');
+                    const moonIcon = themeSwitcher.querySelector('.moon');
+                    thumb.style.transform = theme === 'dark' ? 'translateX(30px)' : 'translateX(0px)';
+                    if (sunIcon) sunIcon.style.display = theme === 'dark' ? 'block' : 'none';
+                    if (moonIcon) moonIcon.style.display = theme === 'dark' ? 'none' : 'block';
+                }
+                const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                applyTheme(savedTheme);
+                updateSwitcherUI(savedTheme);
+                themeSwitcher.addEventListener('click', () => {
+                    const newTheme = htmlEl.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+                    applyTheme(newTheme);
+                    updateSwitcherUI(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                });
+            }
+
+            // --- Initial Page Load ---
+            setupSharedLogic();
+            searchInput.addEventListener('input', filterAndRenderEmployees);
+            filterAndRenderEmployees(); // Initial render
+        });
+    </script>
+</body>
+
+</html>
