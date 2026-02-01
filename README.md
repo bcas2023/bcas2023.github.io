@@ -1,14 +1,1 @@
-<h1> https://bcas2023.github.io/home </h1>
-<h1> see the selling web <a href="https://bcas2023.github.io/web.html"> here </a>
-
-<h1> If you want to get anuy adbe softwere  like : Photoshop , Adobeinasturtal etc . so visit <a href="https://indranilsaha84.github.io/linker"> here </a>
- </h1> 
-<h2> if you see any bug or problem or any kinds of issue pls send an email on this gamil <code>sahaindranil1984@gmail.com</code> </h2>
-
-<h3>Thank You</h3>
-
-   -----
-  <h2> &copy; Baroda Computers and Seals | All rights reaceved by the gov of <strong>Bangladesh</strong> </h2>
-
-# created by a Boy of BAnglaDeSh . 
-
+# if you have come to ad the product image <buttion>click me</buttion> 
